@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailor Availability Update</title>
+
+    <!-- Link to external CSS file for styling -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Tailor Login Form -->
+    <h2>Tailor Login</h2>
+    <form id="loginForm" method="POST" action="login.php">
+        <!-- Input for email -->
+        <label>Email:</label>
+        <input type="email" name="email" required>
+        
+        <!-- Input for password -->
+        <label>Password:</label>
+        <input type="password" name="password" required>
+        
+        <!-- Submit button for login -->
+        <button type="submit">Login</button>
+    </form>
+
+    <!-- Availability Update Section -->
+    <h2>Update Availability</h2>
+    <!-- PHP code work in progress -->
+    <form id="availabilityForm" method="POST" action="updateAvailability.php"> 
+        
+        <!-- Weekly Calendar Table for Selecting Availability -->
+        <table>
+            <tr>
+                <th>Time Slot</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+            </tr>
+            <tr>
+                <td>9AM - 11AM</td>
+                <td><input type="checkbox" name="mon_9am"></td>
+                <td><input type="checkbox" name="tue_9am"></td>
+                <td><input type="checkbox" name="wed_9am"></td>
+                <td><input type="checkbox" name="thu_9am"></td>
+                <td><input type="checkbox" name="fri_9am"></td>
+                <td><input type="checkbox" name="sat_9am"></td>
+                <td><input type="checkbox" name="sun_9am"></td>
+            </tr>
+            <tr>
+                <td>12PM - 2PM</td>
+                <td><input type="checkbox" name="mon_12pm"></td>
+                <td><input type="checkbox" name="tue_12pm"></td>
+                <td><input type="checkbox" name="wed_12pm"></td>
+                <td><input type="checkbox" name="thu_12pm"></td>
+                <td><input type="checkbox" name="fri_12pm"></td>
+                <td><input type="checkbox" name="sat_12pm"></td>
+                <td><input type="checkbox" name="sun_12pm"></td>
+            </tr>
+            <tr>
+                <td>3PM - 5PM</td>
+                <td><input type="checkbox" name="mon_3pm"></td>
+                <td><input type="checkbox" name="tue_3pm"></td>
+                <td><input type="checkbox" name="wed_3pm"></td>
+                <td><input type="checkbox" name="thu_3pm"></td>
+                <td><input type="checkbox" name="fri_3pm"></td>
+                <td><input type="checkbox" name="sat_3pm"></td>
+                <td><input type="checkbox" name="sun_3pm"></td>
+            </tr>
+        </table>
+
+        <!-- Submit button for updating availability -->
+        <button type="submit">Update Availability</button>
+    </form>
+
+</body>
+
+</html>
+

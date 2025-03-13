@@ -1,0 +1,64 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;  
+    color: darkgray;  
+    padding: 20px;
+}
+
+/* Style for headings */
+h2 {
+    color: black;  
+}
+
+/* Style for forms */
+form {
+    margin-bottom: 20px;
+    background-color: white;  
+    padding: 15px;
+    border: 1px solid gray;  
+}
+
+/* Style for table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;  
+}
+
+/* Style for table headers */
+th {
+    background-color: gray;  
+    padding: 10px;
+    text-align: center;
+}
+
+/* Style for table cells */
+td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid gray;  
+}
+
+/* Style for buttons */
+button {
+    background-color: blue;  
+    color: white;
+    padding: 10px 15px;
+    border: none;
+}
+
+button:hover {
+    background-color: darkblue;  
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid black; /* Adds a border to table cells */
+    padding: 8px; /* Adds space inside cells */
+    text-align: center; /* Centers text */
+}
