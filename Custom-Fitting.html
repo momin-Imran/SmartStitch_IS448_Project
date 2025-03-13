@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Custom Fitting Application</title>
+
+        <link rel="stylesheet" href="styles.css">
+
+    </head>
+    <body>
+
+        <!--Insert code to pull information from User account if applicable-->
+        <!-- Using an If-Else statement for the above, Current code is hypothetical "else" code-->
+
+        <section id="user-contact">
+            <h2>Please enter your information:</h2>
+            <h3>If you do not know your measurements you may leave those blank and answer what you do know.</h3>
+            <form id="contact-information" method="POST" action="GuestInformation.php">
+                <fieldset class="GuestContact">
+                    <label for="first-name">First Name: </label>
+                    <input type="name" name="first" max="50" required>
+
+                    <label for="last-name">Last Name: </label>
+                    <input type="name" name="last" maxlength="50" required>
+
+                    <label for="Email">Email address:</label>
+                    <input type="email" name="email" maxlength="75" required>
+
+                    <label for="Phone-Number">Phone Number:</label>
+                    <input type="tel" name="phone" pattern="[0-9]{10,15}" required>
+                </fieldset>
+
+                <fieldset class="measurements-upper">
+
+                    <label for="Chest-Measurement">Chest measurement (cm):</label>
+                    <input type="number" name="chest">
+
+                    <label for="Waist-Measurement">Waist measurement (cm):</label>
+                    <input type="number" name="waist">
+
+                    <label for="Shoulder-Measurement">Shoulder Width (cm):</label>
+                    <input type="number" name="shoulder">
+
+                    <label for="Arm-Measurement">Arm Length (cm):</label>
+                    <input type="number" name="arm">
+
+                    <label for="Neck-Measurement">Neck Size (cm):</label>
+                    <input type="number" name="neck">
+                </fieldset>
+
+                <fieldset class="measurements-lower">
+
+                    <label for="Inseam-Measurement">Inseam measurement (cm):</label>
+                    <input type="number" name="inseam">
+
+                    <label for="Hips-Measurement">Hips measurement (cm):</label>
+                    <input type="number" name="hips">
+
+                    <label for="Rise-Measurement">Rise measurement (cm):</label>
+                    <input type="number" name="rise">
+
+                </fieldset>
+
+                <fieldset class="special">
+                <label for="special-instructions">Special Instructions:</label>
+                <textarea id="special-instructions" name="special-instructions" rows="4" placeholder="Any special tailoring requests..."></textarea>
+                </fieldset>
+
+                <button type="submit">Submit</button>
+            </div>
+            </form>
+        </section>
+
+        <!--Insert code that pulls information from database regarding Tailors availability-->
+
+            
+
+
+    </body>
+
+</html>
