@@ -49,7 +49,6 @@ button {
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%;
     display: block;
     margin-top: 10px;
 }
@@ -113,4 +112,51 @@ input:focus, textarea:focus {
     border-color: #007bff;
     outline: none;
     box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Navbar Styling for homepage */
+.navbar {
+    background-color: #333;
+    padding: 10px;
+    text-align: center;
+}
+
+.navbar li {
+    display: inline;
+    margin-right: 15px;
+}
+
+.navbar li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px;
+}
+
+.navbar li a:hover {
+    background-color: #555;
+    padding: 8px;
+}
+
+/* Product styling using inline-block because we haven't studied flexbox/grid in this class */
+.product-container {
+    display: inline-block; 
+    width: 100%; 
+    text-align: center; 
+}
+
+.product {
+    display: inline-block; 
+    width: 30%; 
+    margin: 10px; 
+    vertical-align: top;
+    border:#c9c6c6 1px solid; 
+}
+
+img{
+    border-radius: 5px;
+}
+
+.add-cart{
+    margin: 0 auto;
 }
