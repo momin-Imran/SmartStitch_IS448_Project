@@ -4,26 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h2>Register for the Smart Clothing Store</h2>
 
-    <form action="/register" method="post">
+    <form action="/register.php" method="POST">
+        <dl>
+            <dt><label for="name">Name:</label></dt>
+            <dd><input type="text" id="name" name="name" required maxLength=255><br><br></dd>
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required maxLength={255}><br><br>
+            <dt><label for="username">Username:</label></dt>
+            <dd><input type="text" id="username" name="username" required maxLength=100><br><br></dd>
 
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required maxLength={100}><br><br>
+            <dt><label for="email">Email:</label></dt>
+            <dd><input type="email" id="email" name="email" required maxLength=255><br><br></dd>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required maxLength={10}><br><br>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required maxLength={100}><br><br>
-
+            <dt><label for="password_register">Password:</label></dt>
+            <dd><input type="password" id="password_register" name="password_register" required maxLength=100><br><br></dd>
+        </dl>
         <button type="submit">Register</button>
+    </form>
+
+    <h2>Login to the Smart Clothing Store</h2>
+
+    <form action="/login.php" method="POST">
+        <dl>
+    
+            <dt><label for="username_email">Username/Email:</label></dt>
+            <dd><input type="text" id="username_email" name="username_email" required maxLength=255><br><br></dd>
+   
+            <dt><label for="password_login">Password:</label></dt>
+            <dd><input type="password" id="password_login" name="password_login" required maxLength=100><br><br></dd>
+        </dl>
+        <button type="submit">Login</button>
     </form>
 </body>
 </html>
