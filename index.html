@@ -1,6 +1,6 @@
 <!-- 
-Author: [Your Name]  
-Description: [Brief description of the file] 
+Author: Momin Imran 
+Description: This is the entry-point to our web app. Generates a basic homepage, with a user-friendly navbar that I initially created only for this page but then we decided to extend to all pages for a consistent connection between pages; thus I set up a simple script using the fetch function to do so. Homepage shows the products listed for purchase using block inline styling. 
 -->
 
 <!DOCTYPE html>
@@ -16,6 +16,7 @@ Description: [Brief description of the file]
     <header id="navbar"></header>
     <script>
         // Load the navbar from the external file
+        //aware we have not studied scripting in class yet 
         fetch('navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
