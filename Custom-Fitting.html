@@ -11,6 +11,13 @@
     </head>
     <body>
 
+        <header id="navbar"></header>
+        <script>
+            // Load the navbar from the external file
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => document.getElementById('navbar').innerHTML = data);
+        </script>
         <!--Insert code to pull information from User account if applicable-->
         <!-- Using an If-Else statement for the above, Current code is hypothetical "else" code-->
 

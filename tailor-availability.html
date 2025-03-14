@@ -12,6 +12,13 @@
 
 <body>
 
+    <header id="navbar"></header>
+    <script>
+        // Load the navbar from the external file
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
     <!-- Tailor Login Form -->
     <h2>Tailor Login</h2>
     <form id="loginForm" method="POST" action="login.php">

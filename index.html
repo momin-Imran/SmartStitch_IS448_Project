@@ -8,17 +8,14 @@
 </head>
 <body>
 
-    <header>
-        <nav class="navbar">
-            <h1>Smart Stitch - Your Personalized Clothing Experience</h1>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="custom-fitting.html">Custom Fitting</a></li>
-                <li><a href="tailor-availability.html">Tailor Availability</a></li>
-                <li><a href="register.html">Register</a></li>
-            </ul>
-        </nav>
-    </header>
+    <header id="navbar"></header>
+    <script>
+        // Load the navbar from the external file
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
+            
 
     <br>
     <br> 
