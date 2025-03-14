@@ -1,6 +1,6 @@
 <!-- 
 Author: Momin Imran 
-Description: This is the entry-point to our web app. Generates a basic homepage, with a user-friendly navbar that I initially created only for this page but then we decided to extend to all pages for a consistent connection between pages; thus I set up a simple script using the fetch function to do so. Homepage shows the products listed for purchase using block inline styling. 
+Description: This is the entry-point to our web app. Generates a basic homepage, with a user-friendly navbar that I initially created only for this page but then we decided to extend to all pages for a consistent connection between pages. Homepage shows the products listed for purchase using block inline styling. 
 -->
 
 <!DOCTYPE html>
@@ -14,13 +14,16 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
 <body>
 
     <header id="navbar"></header>
-    <script>
-        // Load the navbar from the external file
-        //aware we have not studied scripting in class yet 
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('navbar').innerHTML = data);
-    </script>
+    <nav class="navbar">
+        <h1>Smart Stitch - Your Personalized Clothing Experience</h1>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="Custom-Fitting.html">Custom Fitting</a></li>
+            <li><a href="tailor-availability.html">Tailor Availability</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="User-Tailor Communication.html">Contact Tailor</a></li>
+        </ul>
+    </nav>
             
 
     <br>
