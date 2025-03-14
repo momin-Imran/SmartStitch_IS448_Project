@@ -14,17 +14,12 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
 <body>
 
     <header id="navbar"></header>
-    <nav class="navbar">
-        <h1>Smart Stitch - Your Personalized Clothing Experience</h1>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="Custom-Fitting.html">Custom Fitting</a></li>
-            <li><a href="tailor-availability.html">Tailor Availability</a></li>
-            <li><a href="register.html">Register</a></li>
-            <li><a href="User-Tailor Communication.html">Contact Tailor</a></li>
-        </ul>
-    </nav>
-            
+    <script>
+        // Load the navbar from the external file
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>      
 
     <br>
     <br> 
