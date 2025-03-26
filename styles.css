@@ -167,3 +167,15 @@ img{
 .add-cart{
     margin: 0 auto;
 }
+
+
+/* Footer Styling for all pages*/
+.footer{
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    border-top: 2px solid #555;
+}
+
