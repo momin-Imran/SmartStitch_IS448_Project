@@ -128,5 +128,13 @@
 		</p>
 	
 	</div>
+
+
+	<header id="footer"></header>
+            <script>
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => document.getElementById('footer').innerHTML = data);
+            </script>
 	
 </body>
