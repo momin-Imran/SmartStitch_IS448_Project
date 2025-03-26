@@ -95,6 +95,13 @@ Description: This HTML file provides a login form for tailors and an availabilit
         <button type="submit">Update Availability</button>
     </form>
 
+    <header id="footer"></header>
+            <script>
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => document.getElementById('footer').innerHTML = data);
+            </script>
+
 </body>
 
 </html>
