@@ -1,16 +1,9 @@
-<!-- 
-Author: Yug Patel
-Description: Created a form that takes in user details along with other essential fitting details that allow the user to utilize custom tailoring services. User lists down their contact information along with their fitting preferences and measurements. 
--->
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Custom Fitting Application</title>
 
         <link rel="stylesheet" href="styles.css">
@@ -18,13 +11,15 @@ Description: Created a form that takes in user details along with other essentia
     </head>
     <body>
 
+
+        <!--Nav Bar-->>
         <header id="navbar"></header>
-        <script>
-            // Load the navbar from the external file
-            fetch('navbar.html')
-                .then(response => response.text())
-                .then(data => document.getElementById('navbar').innerHTML = data);
-        </script>
+    <script>
+        // Load the navbar from the external file
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>      
         <!--Insert code to pull information from User account if applicable-->
         <!-- Using an If-Else statement for the above, Current code is hypothetical "else" code-->
 
@@ -34,46 +29,46 @@ Description: Created a form that takes in user details along with other essentia
             <form id="contact-information" method="POST" action="GuestInformation.php">
                 <fieldset class="GuestContact">
                     <label for="first-name">First Name: </label>
-                    <input type="text" id="first-name" name="first" maxLength="50" required>
+                    <input type="name" name="first" max="50" required>
 
                     <label for="last-name">Last Name: </label>
-                    <input type="text" id="last-name" name="last" maxlength="50" required>
+                    <input type="name" name="last" maxlength="50" required>
 
                     <label for="Email">Email address:</label>
-                    <input type="email" id="Email" name="email" maxlength="75" required>
+                    <input type="email" name="email" maxlength="75" required>
 
                     <label for="Phone-Number">Phone Number:</label>
-                    <input type="tel" id="Phone-Number" name="phone" pattern="[0-9]{10,15}" required>
+                    <input type="tel" name="phone" pattern="[0-9]{10,15}" required>
                 </fieldset>
 
                 <fieldset class="measurements-upper">
 
                     <label for="Chest-Measurement">Chest measurement (cm):</label>
-                    <input type="number" id="Chest-Measurement" name="chest">
+                    <input type="number" name="chest">
 
                     <label for="Waist-Measurement">Waist measurement (cm):</label>
-                    <input type="number" id="Waist-Measurement" name="waist">
+                    <input type="number" name="waist">
 
                     <label for="Shoulder-Measurement">Shoulder Width (cm):</label>
-                    <input type="number" id="Shoulder-Measurement" name="shoulder">
+                    <input type="number" name="shoulder">
 
                     <label for="Arm-Measurement">Arm Length (cm):</label>
-                    <input type="number" id="Arm-Measurement" name="arm">
+                    <input type="number" name="arm">
 
                     <label for="Neck-Measurement">Neck Size (cm):</label>
-                    <input type="number" id="Neck-Measurement" name="neck">
+                    <input type="number" name="neck">
                 </fieldset>
 
                 <fieldset class="measurements-lower">
 
                     <label for="Inseam-Measurement">Inseam measurement (cm):</label>
-                    <input type="number" id="Inseam-Measurement" name="inseam">
+                    <input type="number" name="inseam">
 
                     <label for="Hips-Measurement">Hips measurement (cm):</label>
-                    <input type="number" id="Hips-Measurement" name="hips">
+                    <input type="number" name="hips">
 
                     <label for="Rise-Measurement">Rise measurement (cm):</label>
-                    <input type="number" id="Rise-Measurement" name="rise">
+                    <input type="number" name="rise">
 
                 </fieldset>
 
@@ -83,13 +78,19 @@ Description: Created a form that takes in user details along with other essentia
                 </fieldset>
 
                 <button type="submit">Submit</button>
+            </div>
             </form>
         </section>
 
         <!--Insert code that pulls information from database regarding Tailors availability-->
 
             
-
+        <header id="footer"></header>
+            <script>
+            fetch('footer.html')
+                .then(response => response.text())
+                .then(data => document.getElementById('footer').innerHTML = data);
+            </script>
 
     </body>
 
