@@ -23,37 +23,36 @@ Description: Register and login page for the smart clothing store
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
     
-    <h2>Register for the Smart Clothing Store</h2>
+    <h2>CREATE ACCOUNT</h2>
+
+    <p class="already-registered">
+        <a href="login.html">I already have it</a>
+    </p>
 
     <form action="/register.php" method="POST">
         <dl>
-            <dt><label for="name">Name:</label></dt>
-            <dd><input type="text" id="name" name="name" required maxLength=255><br><br></dd>
+            <dt><label for="title">TITLE:</label></dt>
+            <dd>
+                <select id="title" name="title" required>
+                    <option value="Mr">Mr</option>
+                    <option value="Mrs">Mrs</option>
+                </select>
+                <br><br>
+            </dd>
 
-            <dt><label for="username">Username:</label></dt>
-            <dd><input type="text" id="username" name="username" required maxLength=100><br><br></dd>
+            <dt><label for="first_name">FIRST NAME:</label></dt>
+            <dd><input type="text" id="first_name" name="first_name" required maxLength=255><br><br></dd>
 
-            <dt><label for="email">Email:</label></dt>
+            <dt><label for="last_name">LAST NAME:</label></dt>
+            <dd><input type="text" id="last_name" name="last_name" required maxLength=255><br><br></dd>
+
+            <dt><label for="email">EMAIL:</label></dt>
             <dd><input type="email" id="email" name="email" required maxLength=255><br><br></dd>
 
-            <dt><label for="password_register">Password:</label></dt>
-            <dd><input type="password" id="password_register" name="password_register" required maxLength=100><br><br></dd>
+            <dt><label for="password">PASSWORD:</label></dt>
+            <dd><input type="password" id="password" name="password" required maxLength=100><br><br></dd>
         </dl>
-        <button type="submit">Register</button>
-    </form>
-
-    <h2>Login to the Smart Clothing Store</h2>
-
-    <form action="/login.php" method="POST">
-        <dl>
-    
-            <dt><label for="username_email">Username/Email:</label></dt>
-            <dd><input type="text" id="username_email" name="username_email" required maxLength=255><br><br></dd>
-   
-            <dt><label for="password_login">Password:</label></dt>
-            <dd><input type="password" id="password_login" name="password_login" required maxLength=100><br><br></dd>
-        </dl>
-        <button type="submit">Login</button>
+        <button type="submit">Create Account</button>
     </form>
 
     
