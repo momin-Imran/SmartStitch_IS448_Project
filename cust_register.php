@@ -3,7 +3,7 @@
 
 <head>
     <title>register.php</title>
-    <link rel="stylesheet" type="text/css" href="form_proc.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="form_proc.css" /> -->
 </head>
 
 <body>
