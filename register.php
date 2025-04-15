@@ -27,7 +27,7 @@
 
 
         #construct a query
-        $constructed_query = "INSERT INTO register (title, first_name, last_name, email, password) VALUES ('$title', '$first_name', '$last_name', '$email', '$password')";
+        $constructed_query = "INSERT INTO Customer_Reg (cust_title, cust_first_name, cust_last_name, cust_email, cust_password) VALUES ('$title', '$first_name', '$last_name', '$email', '$password')";
 
         #Execute query
         $result = mysqli_query($db, $constructed_query);
