@@ -11,7 +11,7 @@ Description: Register and login page for the smart clothing store
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
@@ -20,7 +20,7 @@ Description: Register and login page for the smart clothing store
 
     <script>
         // Load the navbar from the external file
-        fetch('navbar.html')
+        fetch('/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
@@ -45,7 +45,7 @@ Description: Register and login page for the smart clothing store
 
     <header id="footer"></header>
     <script>
-        fetch('footer.html')
+        fetch('/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
     </script>
