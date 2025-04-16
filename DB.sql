@@ -154,4 +154,26 @@ CREATE TABLE OtherCom (
 	FOREIGN KEY (tailor_id) REFERENCES Tailors(tailor_id)
 );
 ------------------------------------------------------------------------------------------------------------------------------
-	
+------------------------------------------------------------------------------------------------------------------------------
+-- Author: Momin Imran
+-- Description: Creates Products and Purchases tables for catalog and user purchase tracking
+------------------------------------------------------------------------------------------------------------------------------
+
+-- Products table holds the store’s catalog of items
+CREATE TABLE Products (
+    product_id   INT AUTO_INCREMENT PRIMARY KEY,
+    name         VARCHAR(100)    NOT NULL,
+    price        DECIMAL(10,2)   NOT NULL
+);
+
+-- Purchases table logs each customer purchase of a product
+CREATE TABLE Purchases (
+    purchase_id   INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id   INT              NOT NULL,
+    product_id    INT              NOT NULL,
+    quantity      INT         NOT NULL DEFAULT 1,
+    purchase_date DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES Customer_Reg(customer_id),
+    FOREIGN KEY (product_id)  REFERENCES Products(product_id)
+);
+
