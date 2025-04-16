@@ -15,10 +15,15 @@ CREATE TABLE Allergens (
 */
 CREATE TABLE SizePrefs (
 	size_id INT AUTO_INCREMENT PRIMARY KEY,
-	customer_id INT NOT NULL,
-	chest VARCHAR(5) NOT NULL,
-	waist VARCHAR (5) NOT NULL,
-	neck VARCHAR (5) NOT NULL,
+	customer_id INT NULL,
+	chest DECIMAL(5,2) NULL,
+	waist DECIMAL(5,2) NULL,
+	neck DECIMAL(5,2) NULL,
+	shoulder DECIMAL(5,2) NULL,
+	arm DECIMAL(5,2) NULL,
+	inseam DECIMAL(5,2) NULL,
+	hips DECIMAL(5,2) NULL,
+	rise DECIMAL(5,2) NULL,
 	FOREIGN KEY (customer_id) REFERENCES Customer_Reg(customer_id)
 );
 /*
@@ -44,7 +49,7 @@ CREATE TABLE Orders (
 	tailor_id INT NOT NULL,
 	dateOrdered DATE NOT NULL,
 	status VARCHAR(1) NOT NULL,
-	details VARCHAR(255) NOT NULL,
+	details VARCHAR(255) NULL,
 	FOREIGN KEY (customer_id) REFERENCES Customer_Reg(customer_id),
 	FOREIGN KEY (tailor_id) REFERENCES Tailors(tailor_id)
 );
