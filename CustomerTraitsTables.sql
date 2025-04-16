@@ -24,6 +24,7 @@ CREATE TABLE SizePrefs (
 	inseam DECIMAL(5,2) NULL,
 	hips DECIMAL(5,2) NULL,
 	rise DECIMAL(5,2) NULL,
+	special_Instruactions VARCHAR(1000),
 	FOREIGN KEY (customer_id) REFERENCES Customer_Reg(customer_id)
 );
 /*
