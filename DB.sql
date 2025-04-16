@@ -1,5 +1,6 @@
 /*
 --------------------------------------------------------
+  Author: Nathan Rakhamimov
   File: tailor_availability.sql
   Description: Creates the database, tables, and inserts
                sample data for the Smart Clothing Store 
