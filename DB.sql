@@ -56,7 +56,8 @@ VALUES
 -- It also includes a sample record insertion for testing purposes.
 
 
--- Tailors table (stores login information)
+-- Customer table (stores login information)
+--Additional Edits by Yug Patel
 CREATE TABLE Customer_Reg (
     customer_id INT AUTO_INCREMENT PRIMARY KEY,
     cust_title ENUM('Mr', 'Mrs') NOT NULL,
@@ -88,6 +89,7 @@ CREATE TABLE Allergens (
 	The sizePrefs table contains an ID for each user's preferences, the customer's ID (also referencing registration), and the measurements for their chest, waist, and neck
 	sizes.
 */
+-- Additional Edits by Yug Patel
 CREATE TABLE SizePrefs (
 	size_id INT AUTO_INCREMENT PRIMARY KEY,
 	customer_id INT NULL,
