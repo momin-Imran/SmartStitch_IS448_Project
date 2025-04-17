@@ -46,9 +46,9 @@ VALUES ('Nathan Rakhamimov', 'nathan@example.com', 'mypassword');
 -- Insert sample availability for the tailor
 INSERT INTO Availability (tailor_id, date, time_slot)
 VALUES 
-    (1, '2025-04-15', '9AM-11AM'),
-    (1, '2025-04-16', '12PM-2PM');
-
+    (1, '2025-04-14', '9AM-11AM'),
+    (1, '2025-04-15', '12PM-2PM');
+    (1, '2025-04-16', '3PM-5PM');
 
 -------------------------------------------------------------------------------------------------------------------------------
 -- Author: Adams Ubini  
