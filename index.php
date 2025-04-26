@@ -5,38 +5,40 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
 
 <?php
 
-    session_start();
+session_start();
 
-    // 1. Check if session expired
-    $timeout_duration = 15; // 2 seconds
-    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout_duration)) {
-        session_unset(); // Unset session variables
-        session_destroy(); // Destroy the session
-        header("Location: customer/cust_login.php"); // Redirect to login page
-        exit();
-    }
-    $_SESSION['LAST_ACTIVITY'] = time(); //2 Update last activity time
+// 1. Check if session expired
+$timeout_duration = 15; // 2 seconds
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout_duration)) {
+    session_unset(); // Unset session variables
+    session_destroy(); // Destroy the session
+    header("Location: customer/cust_login.php"); // Redirect to login page
+    exit();
+}
+$_SESSION['LAST_ACTIVITY'] = time(); //2 Update last activity time
 
 
-    // 3. Check if user is logged in
-    if (!isset($_SESSION['cust_id'])) {
-        header("Location: customer/cust_login.php");
-        exit();
-    } else {
-        echo "<p>Welcome, " . $_SESSION['cust_first_name'] . " " . $_SESSION['cust_last_name'] . "</p>";
-        echo "<p>Your email: " . $_SESSION['cust_email'] . "</p>";
-    }
+// 3. Check if user is logged in
+if (!isset($_SESSION['cust_id'])) {
+    header("Location: customer/cust_login.php");
+    exit();
+} else {
+    echo "<p>Welcome, " . $_SESSION['cust_first_name'] . " " . $_SESSION['cust_last_name'] . "</p>";
+    echo "<p>Your email: " . $_SESSION['cust_email'] . "</p>";
+}
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Stitch</title>
     <link rel="stylesheet" href="/styles.css">
 </head>
+
 <body>
 
     <header id="navbar"></header>
@@ -45,16 +47,16 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
         fetch('/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
-    </script>      
+    </script>
 
     <br>
-    <br> 
+    <br>
 
     <div>
         <h2>Welcome to Smart Stitch!</h2>
         <p>Shop for your favorite clothes and book an appointment with a tailor for the perfect fit.</p>
-<br>
-<br>
+        <br>
+        <br>
         <h3>Shop Our Collection</h3>
         <div class="product-container">
             <div class="product">
@@ -122,11 +124,12 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
     <br>
 
     <header id="footer"></header>
-            <script>
-            fetch('/footer.html')
-                .then(response => response.text())
-                .then(data => document.getElementById('footer').innerHTML = data);
-            </script>
+    <script>
+        fetch('\SmartStitch_IS448_Project\footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+    </script>
 
 </body>
+
 </html>
