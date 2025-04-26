@@ -3,6 +3,32 @@ Author: Momin Imran
 Description: This is the entry-point to our web app. Generates a basic homepage, with a user-friendly navbar that I initially created only for this page but then we decided to extend to all pages for a consistent connection between pages. Homepage shows the products listed for purchase using block inline styling. 
 -->
 
+<?php
+
+    session_start();
+
+    // 1. Check if session expired
+    $timeout_duration = 15; // 2 seconds
+    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout_duration)) {
+        session_unset(); // Unset session variables
+        session_destroy(); // Destroy the session
+        header("Location: customer/cust_login.php"); // Redirect to login page
+        exit();
+    }
+    $_SESSION['LAST_ACTIVITY'] = time(); //2 Update last activity time
+
+
+    // 3. Check if user is logged in
+    if (!isset($_SESSION['cust_id'])) {
+        header("Location: customer/cust_login.php");
+        exit();
+    } else {
+        echo "<p>Welcome, " . $_SESSION['cust_first_name'] . " " . $_SESSION['cust_last_name'] . "</p>";
+        echo "<p>Your email: " . $_SESSION['cust_email'] . "</p>";
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
