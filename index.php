@@ -12,7 +12,7 @@ $timeout_duration = 15; // 2 seconds
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout_duration)) {
     session_unset(); // Unset session variables
     session_destroy(); // Destroy the session
-    header("Location: customer/cust_login.php"); // Redirect to login page
+    header("Location: /customer/cust_login.php"); // Redirect to login page
     exit();
 }
 $_SESSION['LAST_ACTIVITY'] = time(); //2 Update last activity time
@@ -20,7 +20,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); //2 Update last activity time
 
 // 3. Check if user is logged in
 if (!isset($_SESSION['cust_id'])) {
-    header("Location: customer/cust_login.php");
+    header("Location: /customer/cust_login.php");
     exit();
 } else {
     echo "<p>Welcome, " . $_SESSION['cust_first_name'] . " " . $_SESSION['cust_last_name'] . "</p>";
@@ -125,7 +125,7 @@ if (!isset($_SESSION['cust_id'])) {
 
     <header id="footer"></header>
     <script>
-        fetch('\SmartStitch_IS448_Project\footer.html')
+        fetch('/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
     </script>

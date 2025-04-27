@@ -50,7 +50,7 @@ Description: Register and login page for the smart clothing store
             $first_name = mysqli_real_escape_string($db, $first_name);
             $title = mysqli_real_escape_string($db, $title);
             $phone = mysqli_real_escape_string($db, $phone);
-    }
+        }
 
 
         #construct a query
@@ -79,7 +79,7 @@ Description: Register and login page for the smart clothing store
     <h2>CREATE ACCOUNT</h2>
 
     <p class="already-registered">
-        <a href="cust_login.html">I already have it</a>
+        <a href="cust_login.php">I already have it</a>
     </p>
 
     <form action="cust_register.php" method="POST">
