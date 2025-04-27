@@ -5,6 +5,9 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
 
 <?php
 
+include_once($_SERVER['DOCUMENT_ROOT'] . '/~eubini1/is448/SmartStitch_IS448_Project/config.php');
+// include_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+
 session_start();
 
 // 1. Check if session expired
@@ -12,7 +15,7 @@ $timeout_duration = 15; // 2 seconds
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout_duration)) {
     session_unset(); // Unset session variables
     session_destroy(); // Destroy the session
-    header("Location: /customer/cust_login.php"); // Redirect to login page
+    header("Location: $BASE_URL/customer/cust_login.php"); // Redirect to login page
     exit();
 }
 $_SESSION['LAST_ACTIVITY'] = time(); //2 Update last activity time
@@ -20,7 +23,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); //2 Update last activity time
 
 // 3. Check if user is logged in
 if (!isset($_SESSION['cust_id'])) {
-    header("Location: /customer/cust_login.php");
+    header("Location: $BASE_URL/customer/cust_login.php");
     exit();
 } else {
     echo "<p>Welcome, " . $_SESSION['cust_first_name'] . " " . $_SESSION['cust_last_name'] . "</p>";
@@ -36,7 +39,7 @@ if (!isset($_SESSION['cust_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Stitch</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="<?php echo $BASE_URL; ?>/styles.css">
 </head>
 
 <body>
@@ -44,7 +47,7 @@ if (!isset($_SESSION['cust_id'])) {
     <header id="navbar"></header>
     <script>
         // Load the navbar from the external file
-        fetch('/navbar.html')
+        fetch('<?php echo $BASE_URL; ?>/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
@@ -125,7 +128,7 @@ if (!isset($_SESSION['cust_id'])) {
 
     <header id="footer"></header>
     <script>
-        fetch('/footer.html')
+        fetch('<?php echo $BASE_URL; ?>/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
     </script>

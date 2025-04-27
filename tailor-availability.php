@@ -6,6 +6,12 @@ Description: This HTML file provides a login form for tailors and an availabilit
 -->
 
 
+<?php
+include_once($_SERVER['DOCUMENT_ROOT'] . '/~eubini1/is448/SmartStitch_IS448_Project/config.php');
+// include_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +21,7 @@ Description: This HTML file provides a login form for tailors and an availabilit
     <title>Tailor Availability Update</title>
 
     <!-- Link to external CSS file for styling -->
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="<?php echo $BASE_URL; ?>/styles.css">
 </head>
 
 <body>
@@ -23,7 +29,7 @@ Description: This HTML file provides a login form for tailors and an availabilit
     <header id="navbar"></header>
     <script>
         // Load the navbar from the external file
-        fetch('/navbar.html')
+        fetch('<?php echo $BASE_URL; ?>/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
@@ -33,11 +39,11 @@ Description: This HTML file provides a login form for tailors and an availabilit
         <!-- Input for email -->
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
-        
+
         <!-- Input for password -->
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
-        
+
         <!-- Submit button for login -->
         <button type="submit">Login</button>
     </form>
@@ -45,8 +51,8 @@ Description: This HTML file provides a login form for tailors and an availabilit
     <!-- Availability Update Section -->
     <h2>Update Availability</h2>
     <!-- PHP code work in progress -->
-    <form id="availabilityForm" method="POST" action="updateAvailability.php"> 
-        
+    <form id="availabilityForm" method="POST" action="updateAvailability.php">
+
         <!-- Weekly Calendar Table for Selecting Availability -->
         <table>
             <tr>
@@ -96,13 +102,12 @@ Description: This HTML file provides a login form for tailors and an availabilit
     </form>
 
     <header id="footer"></header>
-            <script>
-            fetch('/footer.html')
-                .then(response => response.text())
-                .then(data => document.getElementById('footer').innerHTML = data);
-            </script>
+    <script>
+        fetch('<?php echo $BASE_URL; ?>/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+    </script>
 
 </body>
 
 </html>
-

@@ -3,6 +3,54 @@ Author: Adams Ubini
 Description: Register and login page for the smart clothing store 
 -->
 
+<?php
+include_once($_SERVER['DOCUMENT_ROOT'] . '/~eubini1/is448/SmartStitch_IS448_Project/config.php');
+// include_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+
+#connect to mysql database
+$db = mysqli_connect("studentdb-maria.gl.umbc.edu", "eubini1", "eubini1", "eubini1");
+
+if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
+
+
+# Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    #get the parameter from the HTML form that this PHP program is connected to
+    #since data from the form is sent by the HTTP POST action, use the $_POST array here
+    if (isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['last_name']) && !empty($_POST['last_name']) && isset($_POST['first_name']) && !empty($_POST['first_name'])) {
+        $password = htmlspecialchars($_POST['password']);
+        $email = htmlspecialchars($_POST['email']);
+        $last_name = htmlspecialchars($_POST['last_name']);
+        $first_name = htmlspecialchars($_POST['first_name']);
+        $title = htmlspecialchars($_POST['title']);
+        $phone = htmlspecialchars($_POST['phone']);
+
+        $password = mysqli_real_escape_string($db, $password);
+        $email = mysqli_real_escape_string($db, $email);
+        $last_name = mysqli_real_escape_string($db, $last_name);
+        $first_name = mysqli_real_escape_string($db, $first_name);
+        $title = mysqli_real_escape_string($db, $title);
+        $phone = mysqli_real_escape_string($db, $phone);
+    } else {
+        echo "all fields must be filled out";
+    }
+
+    #construct a query
+    $constructed_query = "INSERT INTO Customer_Reg (cust_title, cust_first_name, cust_last_name, cust_email, cust_password, cust_phone) VALUES ('$title', '$first_name', '$last_name', '$email', '$password', '$phone')";
+
+    #Execute query
+    $result = mysqli_query($db, $constructed_query);
+
+    #if result object is not returned, then print an error and exit the PHP program
+    if (! $result) {
+        print("Error - query could not be executed");
+        $error = mysqli_error($db);
+        print "<p> . $error . </p>";
+        exit;
+    }
+}
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +59,7 @@ Description: Register and login page for the smart clothing store
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="<?php echo $BASE_URL; ?>/styles.css">
 </head>
 
 <body>
@@ -20,66 +68,15 @@ Description: Register and login page for the smart clothing store
 
     <script>
         // Load the navbar from the external file
-        fetch('/navbar.html')
+        fetch('<?php echo $BASE_URL; ?>/navbar.html')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
 
-    <?php
-    #connect to mysql database
-    $db = mysqli_connect("studentdb-maria.gl.umbc.edu", "eubini1", "eubini1", "eubini1");
-
-    if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
-
-
-    # Check if form is submitted
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        #get the parameter from the HTML form that this PHP program is connected to
-        #since data from the form is sent by the HTTP POST action, use the $_POST array here
-        if (isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['last_name']) && !empty($_POST['last_name']) && isset($_POST['first_name']) && !empty($_POST['first_name'])) {
-            $password = htmlspecialchars($_POST['password']);
-            $email = htmlspecialchars($_POST['email']);
-            $last_name = htmlspecialchars($_POST['last_name']);
-            $first_name = htmlspecialchars($_POST['first_name']);
-            $title = htmlspecialchars($_POST['title']);
-            $phone = htmlspecialchars($_POST['phone']);
-
-            $password = mysqli_real_escape_string($db, $password);
-            $email = mysqli_real_escape_string($db, $email);
-            $last_name = mysqli_real_escape_string($db, $last_name);
-            $first_name = mysqli_real_escape_string($db, $first_name);
-            $title = mysqli_real_escape_string($db, $title);
-            $phone = mysqli_real_escape_string($db, $phone);
-        }
-
-
-        #construct a query
-        $constructed_query = "INSERT INTO Customer_Reg (cust_title, cust_first_name, cust_last_name, cust_email, cust_password, cust_phone) VALUES ('$title', '$first_name', '$last_name', '$email', '$password', '$phone')";
-
-        #Execute query
-        $result = mysqli_query($db, $constructed_query);
-
-        #if result object is not returned, then print an error and exit the PHP program
-        if (! $result) {
-            print("Error - query could not be executed");
-            $error = mysqli_error($db);
-            print "<p> . $error . </p>";
-            exit;
-        }
-    ?>
-        <!--if program reaches this print statement, it means the query worked-->
-        <h3>Sanity check print statement:</h3> If this line is reached in the program, it means that the query worked
-        <br />
-    <?php
-    } else {
-        echo "all fields must be filled out";
-    }
-    ?>
-
     <h2>CREATE ACCOUNT</h2>
 
     <p class="already-registered">
-        <a href="cust_login.php">I already have it</a>
+        <a href="<?php echo $BASE_URL; ?>cust_login.php">I already have it</a>
     </p>
 
     <form action="cust_register.php" method="POST">
@@ -114,7 +111,7 @@ Description: Register and login page for the smart clothing store
 
     <header id="footer"></header>
     <script>
-        fetch('/footer.html')
+        fetch('<?php echo $BASE_URL; ?>/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
     </script>
