@@ -75,7 +75,7 @@ Description: Register and login page for the smart clothing store
     <h2>CREATE ACCOUNT</h2>
 
     <p class="already-registered">
-        <a href="<?php echo $BASE_URL; ?>cust_login.php">I already have it</a>
+        <a href="<?php echo $BASE_URL; ?>/customer/cust_login.php">I already have it</a>
     </p>
 
     <form action="cust_register.php" method="POST">

@@ -98,7 +98,7 @@ Description: Register and login page for the smart clothing store
         <button type="submit" name="login_submit">Login</button>
     </form>
 
-    <button class="create-account" type="submit" onclick="window.location.href='<?php echo $BASE_URL; ?>/cust_register.php'">Create Account</button>
+    <button class="create-account" type="submit" onclick="window.location.href='<?php echo $BASE_URL; ?>/customer/cust_register.php'">Create Account</button>
 
 
 
