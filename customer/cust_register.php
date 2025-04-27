@@ -4,7 +4,7 @@ Description: Register and login page for the smart clothing store
 -->
 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT'] . '../config.php');
+include_once('../config.php');
 // include_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
 
 #connect to mysql database
