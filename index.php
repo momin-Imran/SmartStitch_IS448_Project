@@ -5,31 +5,30 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
 
 <?php
 
-// include_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
-include_once('config.php');
+    include_once('config.php');
 
 
-session_start();
+    session_start();
 
-// 1. Check if session expired
-$timeout_duration = 15; // 2 seconds
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout_duration)) {
-    session_unset(); // Unset session variables
-    session_destroy(); // Destroy the session
-    header("Location: $BASE_URL/customer/cust_login.php"); // Redirect to login page
-    exit();
-}
-$_SESSION['LAST_ACTIVITY'] = time(); //2 Update last activity time
+    // 1. Check if session expired
+    $timeout_duration = 15; // 2 seconds
+    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout_duration)) {
+        session_unset(); // Unset session variables
+        session_destroy(); // Destroy the session
+        header("Location: $BASE_URL/customer/cust_login.php"); // Redirect to login page
+        exit();
+    }
+    $_SESSION['LAST_ACTIVITY'] = time(); //2 Update last activity time
 
 
-// 3. Check if user is logged in
-if (!isset($_SESSION['cust_id'])) {
-    header("Location: $BASE_URL/customer/cust_login.php");
-    exit();
-} else {
-    echo "<p>Welcome, " . $_SESSION['cust_first_name'] . " " . $_SESSION['cust_last_name'] . "</p>";
-    echo "<p>Your email: " . $_SESSION['cust_email'] . "</p>";
-}
+    // 3. Check if user is logged in
+    if (!isset($_SESSION['cust_id'])) {
+        header("Location: $BASE_URL/customer/cust_login.php");
+        exit();
+    } else {
+        echo "<p>Welcome, " . $_SESSION['cust_first_name'] . " " . $_SESSION['cust_last_name'] . "</p>";
+        echo "<p>Your email: " . $_SESSION['cust_email'] . "</p>";
+    }
 
 ?>
 

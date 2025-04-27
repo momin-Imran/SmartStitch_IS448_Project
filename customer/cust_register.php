@@ -4,53 +4,50 @@ Description: Register and login page for the smart clothing store
 -->
 
 <?php
-include_once('../config.php');
-// include_once($_SERVER['DOCUMENT_ROOT'] . '~eubini1/is448/SmartStitch_IS448_Project/config.php');
+    include_once('../config.php');
 
-// include_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+    #connect to mysql database
+    $db = mysqli_connect("studentdb-maria.gl.umbc.edu", "eubini1", "eubini1", "eubini1");
 
-#connect to mysql database
-$db = mysqli_connect("studentdb-maria.gl.umbc.edu", "eubini1", "eubini1", "eubini1");
-
-if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
+    if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
 
 
-# Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    #get the parameter from the HTML form that this PHP program is connected to
-    #since data from the form is sent by the HTTP POST action, use the $_POST array here
-    if (isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['last_name']) && !empty($_POST['last_name']) && isset($_POST['first_name']) && !empty($_POST['first_name'])) {
-        $password = htmlspecialchars($_POST['password']);
-        $email = htmlspecialchars($_POST['email']);
-        $last_name = htmlspecialchars($_POST['last_name']);
-        $first_name = htmlspecialchars($_POST['first_name']);
-        $title = htmlspecialchars($_POST['title']);
-        $phone = htmlspecialchars($_POST['phone']);
+    # Check if form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        #get the parameter from the HTML form that this PHP program is connected to
+        #since data from the form is sent by the HTTP POST action, use the $_POST array here
+        if (isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['last_name']) && !empty($_POST['last_name']) && isset($_POST['first_name']) && !empty($_POST['first_name'])) {
+            $password = htmlspecialchars($_POST['password']);
+            $email = htmlspecialchars($_POST['email']);
+            $last_name = htmlspecialchars($_POST['last_name']);
+            $first_name = htmlspecialchars($_POST['first_name']);
+            $title = htmlspecialchars($_POST['title']);
+            $phone = htmlspecialchars($_POST['phone']);
 
-        $password = mysqli_real_escape_string($db, $password);
-        $email = mysqli_real_escape_string($db, $email);
-        $last_name = mysqli_real_escape_string($db, $last_name);
-        $first_name = mysqli_real_escape_string($db, $first_name);
-        $title = mysqli_real_escape_string($db, $title);
-        $phone = mysqli_real_escape_string($db, $phone);
-    } else {
-        echo "all fields must be filled out";
+            $password = mysqli_real_escape_string($db, $password);
+            $email = mysqli_real_escape_string($db, $email);
+            $last_name = mysqli_real_escape_string($db, $last_name);
+            $first_name = mysqli_real_escape_string($db, $first_name);
+            $title = mysqli_real_escape_string($db, $title);
+            $phone = mysqli_real_escape_string($db, $phone);
+        } else {
+            echo "all fields must be filled out";
+        }
+
+        #construct a query
+        $constructed_query = "INSERT INTO Customer_Reg (cust_title, cust_first_name, cust_last_name, cust_email, cust_password, cust_phone) VALUES ('$title', '$first_name', '$last_name', '$email', '$password', '$phone')";
+
+        #Execute query
+        $result = mysqli_query($db, $constructed_query);
+
+        #if result object is not returned, then print an error and exit the PHP program
+        if (! $result) {
+            print("Error - query could not be executed");
+            $error = mysqli_error($db);
+            print "<p> . $error . </p>";
+            exit;
+        }
     }
-
-    #construct a query
-    $constructed_query = "INSERT INTO Customer_Reg (cust_title, cust_first_name, cust_last_name, cust_email, cust_password, cust_phone) VALUES ('$title', '$first_name', '$last_name', '$email', '$password', '$phone')";
-
-    #Execute query
-    $result = mysqli_query($db, $constructed_query);
-
-    #if result object is not returned, then print an error and exit the PHP program
-    if (! $result) {
-        print("Error - query could not be executed");
-        $error = mysqli_error($db);
-        print "<p> . $error . </p>";
-        exit;
-    }
-}
 ?>
 
 

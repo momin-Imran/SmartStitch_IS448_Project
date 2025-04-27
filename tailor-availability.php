@@ -7,11 +7,7 @@ Description: This HTML file provides a login form for tailors and an availabilit
 
 
 <?php
-include_once('config.php');
-// include_once($_SERVER['DOCUMENT_ROOT'] . '/SmartStitch_IS448_Project/config.php');
-
-// include_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
-
+    include_once('config.php');
 ?>
 
 <!DOCTYPE html>
