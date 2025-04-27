@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script>
         // Load the navbar from the external file
-        fetch('<?php echo $BASE_URL; ?>/navbar.html')
+        fetch('<?php echo $BASE_URL; ?>/navbar.php')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
