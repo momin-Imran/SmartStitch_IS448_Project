@@ -5,8 +5,9 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
 
 <?php
 
-include_once($_SERVER['DOCUMENT_ROOT'] . '/~eubini1/is448/SmartStitch_IS448_Project/config.php');
 // include_once($_SERVER['DOCUMENT_ROOT'] . '/config.php');
+include_once('config.php');
+
 
 session_start();
 
