@@ -3,6 +3,7 @@ Author: Nathan Rakhamimov
 Description: This HTML file provides a login form for tailors and an availability update section.
     Tailors can log in with their email and password, then update their available time slots 
     using a weekly calendar format. The form submits data for processing. 
+Preset Tailor Log In credentials: john@example.com / password123
 -->
 
 
@@ -34,13 +35,13 @@ Description: This HTML file provides a login form for tailors and an availabilit
     <!-- Tailor Login Form -->
     <h2>Tailor Login</h2>
     <form id="loginForm" method="POST" action="login.php">
-        <!-- Input for email -->
+        <!-- Input for email with placeholder -->
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email" placeholder="john@example.com" required>
 
-        <!-- Input for password -->
+        <!-- Input for password with placeholder -->
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" placeholder="password123" required>
 
         <!-- Submit button for login -->
         <button type="submit">Login</button>
