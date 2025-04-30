@@ -1,0 +1,117 @@
+/* 
+-------------------------------------------
+File: styles2.css
+Description: Styles for the tailor login and availability update pages.
+This file handles the overall look and feel including layout, form design,
+button behavior, and table formatting.
+-------------------------------------------
+*/
+
+/* General styling for the entire page */
+body {
+    font-family: Arial, sans-serif; 
+    background-color: #e9ecef;      
+    color: #333;                    
+    padding: 20px;                  
+    margin: 0;                      
+}
+
+/* Headings */
+h2 {
+    color: #007bff;          
+    text-align: center;      
+    margin-top: 30px;        
+}
+
+/* Form container styling */
+form {
+    background-color: white; 
+    padding: 25px;            
+    margin: 20px auto;        
+    border-radius: 10px;      
+    /* Box shadow adds a soft shadow around the form to give a card-like appearance */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); 
+    max-width: 600px;         
+}
+
+/* Labels for form fields */
+label {
+    display: block;          
+    font-weight: bold;       
+    margin: 10px 0 5px;      
+}
+
+/* Input fields (email, password) */
+input[type="email"],
+input[type="password"] {
+    width: 100%;              
+    padding: 10px;            
+    margin-bottom: 15px;      
+    border: 1px solid #ccc;   
+    border-radius: 6px;       
+    background-color: #f8f9fa;
+}
+
+/* Submit and action buttons */
+button {
+    background-color: #007bff; 
+    color: white;              
+    padding: 12px;             
+    font-size: 16px;           
+    border: none;              
+    border-radius: 6px;        
+    cursor: pointer;           
+    width: 100%;              
+    margin-top: 10px;          
+}
+
+button:hover {
+    background-color: #0056b3; 
+}
+
+/* Table styling for availability grid */
+table {
+    width: 100%;                
+    border-collapse: collapse;   
+    margin-top: 20px;            
+    background-color: white;     
+    border-radius: 10px;         
+    overflow: hidden;            /* Ensures content stays within rounded edges */
+    /* Box shadow for table container to give it depth on the page */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); 
+}
+
+/* Table headers */
+th {
+    background-color: #007bff; 
+    color: white;              
+    padding: 12px;            
+    text-align: center;        
+    font-weight: bold;         
+}
+
+/* Table data cells */
+td {
+    border: 1px solid #ddd;    
+    padding: 12px;             
+    text-align: center;        
+    background-color: #f9f9f9; 
+}
+
+/* First column (time slots) is visually distinct */
+td:first-child {
+    background-color: #f1f1f1;
+    font-weight: bold; /* Bolds the texts */
+}
+
+/* Checkbox input fields */
+input[type="checkbox"] {
+    transform: scale(1.2); /* Scale up checkboxes to make them more user-friendly */
+}
+
+/* Navbar container placeholder */
+#navbar {
+    margin-bottom: 20px;
+}
+
+
