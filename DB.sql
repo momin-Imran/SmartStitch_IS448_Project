@@ -8,6 +8,7 @@
   Usage: Import this file into phpMyAdmin to set up 
          the necessary database structure and test data.
 --------------------------------------------------------
+*/
 -- Create the database
 CREATE DATABASE IF NOT EXISTS SmartClothingStore;
 USE SmartClothingStore;
@@ -33,9 +34,10 @@ CREATE TABLE IF NOT EXISTS Availability (
 CREATE INDEX idx_date_time ON Availability(date, time_slot);
 
 -- Insert sample tailors
-INSERT INTO Tailors (email, password) VALUES
-('john@example.com', 'password123'),
-('tailor@example.com', 'password123'); -- For login testing
+INSERT INTO Tailors (name, email, password) VALUES
+('John Doe', 'john@example.com', 'password123'),
+('Jane Smith', 'tailor@example.com', 'password123')
+ON DUPLICATE KEY UPDATE email=email;
 
 -- Insert sample availability for tailor_id = 1 (John Doe)
 INSERT INTO Availability (tailor_id, date, time_slot) VALUES
@@ -43,7 +45,8 @@ INSERT INTO Availability (tailor_id, date, time_slot) VALUES
 (1, '2025-04-15', '12PM-2PM'),
 (1, '2025-04-16', '3PM-5PM');
 
-
+-- Confirm the tailor records exist
+SELECT * FROM Tailors;
 -------------------------------------------------------------------------------------------------------------------------------
 -- Author: Adams Ubini  
 -- Description: This SQL script creates the `Customer` table, which stores customer registration details such as title, name, email, phone number, and password. 
