@@ -106,7 +106,7 @@ CREATE TABLE SizePrefs (
 	inseam DECIMAL(5,2) NULL,
 	hips DECIMAL(5,2) NULL,
 	rise DECIMAL(5,2) NULL,
-	special_Instruactions VARCHAR(1000),
+	specInst VARCHAR(1000),
 	FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
 /*
@@ -119,6 +119,7 @@ CREATE TABLE SizePrefsOther (
 	size_id INT NOT NULL,
 	dimension VARCHAR(10) NOT NULL,
 	measure VARCHAR(5) NOT NULL,
+	specInst VARCHAR(1000),
 	FOREIGN KEY (size_id) REFERENCES SizePrefs(size_id)
 );
 /*
