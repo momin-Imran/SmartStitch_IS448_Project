@@ -33,19 +33,19 @@ Preset Tailor Log In credentials: john@example.com / password123
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
     <!-- Tailor Login Form -->
-    <h2>Tailor Login</h2>
-    <form id="loginForm" method="POST" action="login.php">
+    <!-- <h2>Tailor Login</h2> -->
+    <!-- <form id="loginForm" method="POST" action="login.php"> -->
         <!-- Input for email with placeholder -->
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="john@example.com" required>
+        <!-- <label for="email">Email:</label> -->
+        <!-- <input type="email" id="email" name="email" placeholder="john@example.com" required> -->
 
         <!-- Input for password with placeholder -->
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="password123" required>
+        <!-- <label for="password">Password:</label> -->
+        <!-- <input type="password" id="password" name="password" placeholder="password123" required> -->
 
         <!-- Submit button for login -->
-        <button type="submit">Login</button>
-    </form>
+        <!-- <button type="submit">Login</button> -->
+    <!-- </form> -->
 
     <!-- Availability Update Section -->
     <h2>Update Availability</h2>

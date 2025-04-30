@@ -17,12 +17,14 @@ Description: Register and login page for the smart clothing store
         #get the parameter from the HTML form that this PHP program is connected to
         #since data from the form is sent by the HTTP POST action, use the $_POST array here
         if (isset($_POST['password']) && !empty($_POST['password']) && isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['last_name']) && !empty($_POST['last_name']) && isset($_POST['first_name']) && !empty($_POST['first_name'])) {
-            $password = htmlspecialchars($_POST['password']);
-            $email = htmlspecialchars($_POST['email']);
-            $last_name = htmlspecialchars($_POST['last_name']);
-            $first_name = htmlspecialchars($_POST['first_name']);
-            $title = htmlspecialchars($_POST['title']);
-            $phone = htmlspecialchars($_POST['phone']);
+
+            
+            $password = trim(htmlspecialchars($_POST['password']));
+            $email = trim(htmlspecialchars($_POST['email']));
+            $last_name = trim(htmlspecialchars($_POST['last_name']));
+            $first_name = trim(htmlspecialchars($_POST['first_name']));
+            $title = trim(htmlspecialchars($_POST['title']));
+            $phone = trim(htmlspecialchars($_POST['phone']));
 
             $password = mysqli_real_escape_string($db, $password);
             $email = mysqli_real_escape_string($db, $email);
@@ -30,22 +32,42 @@ Description: Register and login page for the smart clothing store
             $first_name = mysqli_real_escape_string($db, $first_name);
             $title = mysqli_real_escape_string($db, $title);
             $phone = mysqli_real_escape_string($db, $phone);
+
+            $password = password_hash($password, PASSWORD_DEFAULT); // Hash the password for security
+        
+
+            #construct a query
+            $constructed_query = "INSERT INTO Users (title, first_name, last_name, email, password, phone) VALUES ('$title', '$first_name', '$last_name', '$email', '$password', '$phone')";
+
+            #Execute query
+            $result = mysqli_query($db, $constructed_query);
+
+            #if result object is not returned, then print an error and exit the PHP program
+            if (! $result) {
+                $error = mysqli_error($db);
+                echo "<script>alert('Registration failed: $error')</script>";
+                exit;
+            } else {
+
+                // Get the inserted user_id
+                $user_id = mysqli_insert_id($db);
+
+                // Insert into Customer table
+                $cust_query = "INSERT INTO Customer (user_id) VALUES ('$user_id')";
+                $cust_result = mysqli_query($db, $cust_query);
+
+                if (!$cust_result) {
+                    $error = mysqli_error($db);
+                    echo "<script>alert('Registration failed: $error')</script>";
+                    exit;
+                }
+
+                echo "<script>alert('Registration successful! You can now log in.');</script>";
+                header("Location: $BASE_URL/customer/cust_login.php");
+                exit;
+            }
         } else {
             echo "all fields must be filled out";
-        }
-
-        #construct a query
-        $constructed_query = "INSERT INTO Customer_Reg (cust_title, cust_first_name, cust_last_name, cust_email, cust_password, cust_phone) VALUES ('$title', '$first_name', '$last_name', '$email', '$password', '$phone')";
-
-        #Execute query
-        $result = mysqli_query($db, $constructed_query);
-
-        #if result object is not returned, then print an error and exit the PHP program
-        if (! $result) {
-            print("Error - query could not be executed");
-            $error = mysqli_error($db);
-            print "<p> . $error . </p>";
-            exit;
         }
     }
 ?>
@@ -78,7 +100,7 @@ Description: Register and login page for the smart clothing store
         <a href="<?php echo $BASE_URL; ?>/customer/cust_login.php">I already have it</a>
     </p>
 
-    <form action="cust_register.php" method="POST">
+    <form id="registerForm" action="cust_register.php" method="POST">
         <dl>
             <dt><label for="title">TITLE:</label></dt>
             <dd>
@@ -103,6 +125,9 @@ Description: Register and login page for the smart clothing store
 
             <dt><label for="password">PASSWORD:</label></dt>
             <dd><input type="password" id="password" name="password" required maxLength=100><br><br></dd>
+
+            <dt><label for="confirm_password">CONFIRM PASSWORD:</label></dt>
+            <dd><input type="password" id="confirm_password" name="confirm_password" required maxLength=100><br><br></dd>
         </dl>
         <button type="submit">Create Account</button>
     </form>
@@ -114,6 +139,7 @@ Description: Register and login page for the smart clothing store
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
     </script>
+    <script src="<?php echo $BASE_URL; ?>/customer/cust_register.js"></script>
 </body>
 
 </html>

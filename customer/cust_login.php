@@ -18,18 +18,13 @@ Description: Register and login page for the smart clothing store
         #get the parameter from the HTML form that this PHP program is connected to
         #since data from the form is sent by the HTTP POST action, use the $_POST array here
         if (isset($_POST['password_login']) && !empty($_POST['password_login']) && isset($_POST['email']) && !empty($_POST['email'])) {
-            $password = htmlspecialchars($_POST['password_login']);
-            $email = htmlspecialchars($_POST['email']);
+            $password = trim(htmlspecialchars($_POST['password_login']));
+            $email = trim(htmlspecialchars($_POST['email']));
 
             $password = mysqli_real_escape_string($db, $password);
             $email = mysqli_real_escape_string($db, $email);
 
-
-
-            #construct a query
-            $constructed_query = "SELECT * FROM Customer_Reg WHERE cust_email = '$email' AND cust_password = '$password'";
-
-            #Execute query
+            $constructed_query = "SELECT * FROM Users WHERE email = '$email'";
             $result = mysqli_query($db, $constructed_query);
 
             #if result object is not returned, then print an error and exit the PHP program
@@ -39,21 +34,26 @@ Description: Register and login page for the smart clothing store
                 print "<p> . $error . </p>";
                 exit;
             }
-            #  <!-- check if exactly one row was returned -->
+
             if (mysqli_num_rows($result) == 1) {
                 $row = mysqli_fetch_assoc($result);
+                
+                // Check hashed password
+                if (password_verify($password, $row['password'])) {
+                    $_SESSION['user_id'] = $row['user_id'];
+                    $_SESSION['email'] = $row['email'];
+                    $_SESSION['first_name'] = $row['first_name'];
+                    $_SESSION['last_name'] = $row['last_name'];
+                    $_SESSION['phone'] = $row['phone'];
+                    $_SESSION['title'] = $row['title'];
+                    $_SESSION['role'] = $row['role'];
 
-                // <!-- Set session variables -->
-                $_SESSION['cust_id'] = $row['customer_id'];
-                $_SESSION['cust_email'] = $row['cust_email'];
-                $_SESSION['cust_first_name'] = $row['cust_first_name'];
-                $_SESSION['cust_last_name'] = $row['cust_last_name'];
-                $_SESSION['cust_phone'] = $row['cust_phone'];
-                $_SESSION['cust_title'] = $row['cust_title'];
-
-                // Login successful, redirect to homepage
-                header("Location: $BASE_URL/index.php");
-                exit();
+                    // Login successful, redirect to homepage
+                    header("Location: $BASE_URL/index.php");
+                    exit();
+                } else {
+                    echo "<script>alert('Invalid email or password. Please try again.');</script>";
+                }
             }
         } else {
             echo "all fields must be filled out";
@@ -86,7 +86,7 @@ Description: Register and login page for the smart clothing store
 
     <h2>Login to the Smart Clothing Store</h2>
 
-    <form action="<?php echo $BASE_URL; ?>/customer/cust_login.php" method="POST">
+    <form id="loginForm" action="<?php echo $BASE_URL; ?>/customer/cust_login.php" method="POST">
         <dl>
 
             <dt><label for="email">Email:</label></dt>
@@ -108,6 +108,7 @@ Description: Register and login page for the smart clothing store
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
     </script>
+    <script src="<?php echo $BASE_URL; ?>/customer/cust_register.js"></script>
 </body>
 
 </html>

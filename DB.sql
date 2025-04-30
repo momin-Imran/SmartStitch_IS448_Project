@@ -15,9 +15,8 @@ USE SmartClothingStore;
 -- Tailors table stores tailor login credentials
 CREATE TABLE IF NOT EXISTS Tailors (
     tailor_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+	user_id INT NOT NULL UNIQUE,
+	foreign key (user_id) references Users(user_id) on delete cascade
 );
 
 -- Availability table links tailor to available time slots
@@ -47,24 +46,32 @@ INSERT INTO Availability (tailor_id, date, time_slot) VALUES
 
 -------------------------------------------------------------------------------------------------------------------------------
 -- Author: Adams Ubini  
--- Description: This SQL script creates the `Customer_Reg` table, which stores customer registration details such as title, name, email, phone number, and password. 
+-- Description: This SQL script creates the `Customer` table, which stores customer registration details such as title, name, email, phone number, and password. 
 -- It also includes a sample record insertion for testing purposes.
 
 
 -- Customer table (stores login information)
 --Additional Edits by Yug Patel
-CREATE TABLE Customer_Reg (
+CREATE TABLE Customer (
     customer_id INT AUTO_INCREMENT PRIMARY KEY,
-    cust_title ENUM('Mr', 'Mrs') NOT NULL,
-    cust_first_name VARCHAR(100) NOT NULL,
-    cust_last_name VARCHAR(100) NOT NULL,
-    cust_email VARCHAR(100) NOT NULL UNIQUE,
-    cust_phone VARCHAR(15) NOT NULL UNIQUE,
-    cust_password VARCHAR(255) NOT NULL
+	user_id INT NOT NULL UNIQUE,
+	foreign key (user_id) references Users(user_id) on delete cascade
+);
+
+create table Users (
+	user_id INT AUTO_INCREMENT PRIMARY KEY,
+	title ENUM('Mr', 'Mrs') NOT NULL,
+	email VARCHAR(100) NOT NULL UNIQUE,
+	password VARCHAR(255) NOT NULL,
+	phone VARCHAR(15) NOT NULL UNIQUE,
+	first_name VARCHAR(100) NOT NULL,
+	last_name VARCHAR(100) NOT NULL,
+	role ENUM('customer', 'tailor') NOT NULL DEFAULT 'customer',
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Insert a sample tailor
-INSERT INTO Customer_Reg (cust_title, cust_first_name, cust_last_name, cust_email, cust_phone, cust_password)
+INSERT INTO Customer (cust_title, cust_first_name, cust_last_name, cust_email, cust_phone, cust_password)
 VALUES ('Mr', 'Declan', 'Rice', 'rice@example.com', '123-456-7890', 'password123');
 ------------------------------------------------------------------------------------------------------------------------------
 -- Author : Taurus Hink
@@ -78,7 +85,7 @@ CREATE TABLE Allergens (
 	customer_id INT NOT NULL,
 	allergen VARCHAR(30) NOT NULL,
 	severity VARCHAR(10) NOT NULL,
-	FOREIGN KEY (customer_id) REFERENCES Customer_Reg(customer_id)
+	FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
 /*
 	The sizePrefs table contains an ID for each user's preferences, the customer's ID (also referencing registration), and the measurements for their chest, waist, and neck
@@ -97,7 +104,7 @@ CREATE TABLE SizePrefs (
 	hips DECIMAL(5,2) NULL,
 	rise DECIMAL(5,2) NULL,
 	special_Instruactions VARCHAR(1000),
-	FOREIGN KEY (customer_id) REFERENCES Customer_Reg(customer_id)
+	FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
 /*
 	The sizePrefsOther Table is for any other preferences that the customer might have that aren't part of the default 3 listed in the sizePrefs table.
@@ -123,7 +130,7 @@ CREATE TABLE Orders (
 	dateOrdered DATE NOT NULL,
 	status VARCHAR(1) NOT NULL,
 	details VARCHAR(255) NULL,
-	FOREIGN KEY (customer_id) REFERENCES Customer_Reg(customer_id),
+	FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
 	FOREIGN KEY (tailor_id) REFERENCES Tailors(tailor_id)
 );
 /*
@@ -147,7 +154,7 @@ CREATE TABLE OtherCom (
 	tailor_id INT NOT NULL,
 	com_date DATE NOT NULL,
 	concern VARCHAR(255) NOT NULL,
-	FOREIGN KEY (customer_id) REFERENCES Customer_Reg(customer_id),
+	FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
 	FOREIGN KEY (tailor_id) REFERENCES Tailors(tailor_id)
 );
 ------------------------------------------------------------------------------------------------------------------------------
@@ -170,7 +177,7 @@ CREATE TABLE Purchases (
     product_id    INT              NOT NULL,
     quantity      INT         NOT NULL DEFAULT 1,
     purchase_date DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (customer_id) REFERENCES Customer_Reg(customer_id),
+    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
     FOREIGN KEY (product_id)  REFERENCES Products(product_id)
 );
 

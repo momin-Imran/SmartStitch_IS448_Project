@@ -22,12 +22,12 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
 
 
     // 3. Check if user is logged in
-    if (!isset($_SESSION['cust_id'])) {
+    if (!isset($_SESSION['user_id'])) {
         header("Location: $BASE_URL/customer/cust_login.php");
         exit();
     } else {
-        echo "<p>Welcome, " . $_SESSION['cust_first_name'] . " " . $_SESSION['cust_last_name'] . "</p>";
-        echo "<p>Your email: " . $_SESSION['cust_email'] . "</p>";
+        echo "<p>Welcome, " . $_SESSION['first_name'] . " " . $_SESSION['last_name'] . "</p>";
+        echo "<p>Your email: " . $_SESSION['email'] . "</p>";
     }
 
 ?>
