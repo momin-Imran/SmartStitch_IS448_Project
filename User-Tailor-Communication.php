@@ -4,9 +4,20 @@
               status, concerns about their order after they have recieved the product, and any other concerns they may have. This form submits data for processing.
 
  -->
+session_start();
 
 <?php
+
+	if (!isset($_SESSION["user_id"])) {
+		header("locaton: $BASE_URL/customer/cust_login.php");
+		exit();
+	}
+		
 	include_once('config.php');
+	
+	$db = mysqli_connect("studentdb-maria.gl.umbc.edu", "eubini1", "eubini1", "eubini1");
+
+        if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +60,6 @@
 		<h2> Communication Form </h2>
 
 		<form action="communication.php" method="POST">
-			<!-- This currently doesn't lead to a php page, the action is a placeholder for now. -->
 
 			<label>
 				Enter your tailor's name :
@@ -72,21 +82,109 @@
 
 
 			<br>
-
+			
+			<!-- Allergens section --!>
+			
 			<label>
-				Type any allegies in the following space (Type N/A if you have no relavent allergies) :
+				Do you need to add a potential allergen of concern?
+			</label>
+			<label>
+				<input type="radio" name="ifAllerg" value="yes"> Yes
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="ifAllerg" value="no"> No
+			</label>
+			
+			<br>
+			
+			<label>
+				Type any allegen in the following space (Type N/A if you picked "No" for the last option) :
 				<input type="text" name="allergens">
 			</label>
 
 			<br>
-
+			
 			<label>
-				If you need to resize your order, type the specifications in the space below (Type N/A if you do not need to) :
+				What level of severity is this allergen (pick N/A if there is no allegen to add)?
+			</label>
+			<label>
+				<input type="radio" name="severity" value="N/A"> N/A
+			</label>
+			<label>
+				<input type="radio" name="severity" value="Mild"> Mild
+			</label>
+			<label>
+				<input type="radio" name="severity" value="Moderate"> Moderate
+			</label>
+			<label>
+				<input type="radio" name="severity" value="Severe"> Severe
+			</label>
+			
+			<br>
+			
+			<!-- Resize Order Section --!>
+			
+			<label>
+				Do you need to resize any dimension of your order?
+			</label>
+			<label>
+				<input type="radio" name="ifResize" value="yes"> Yes
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="ifResize" value="no"> No
+			</label>
+			
+			<label>
+				Select which dimension of your order you wish to resize (Select N/A if you picked "No" for the last option) : 
+			</label>
+			<select name="dimen">
+				<option value="N/A"> N/A </option>
+				<option value="chest"> Chest </option>
+				<option value="waist"> Waist </option>
+				<option value="neck"> Neck </option>
+				<option value="shoulder"> Shoulders </option>
+				<option value="arm"> Arms </option>
+				<option value="inseam"> In-seam </option>
+				<option value="hips"> Hips </option>
+				<option value="rise"> Rise </option>
+				<option value="other"> Other </option>
+			</select>
+			
+			<br>
+			
+			<label>
+				If you chose "other" for the last option, please input dimension here (Type N/A if you did not) :
+				<input type="text" name="otherDim">
+			</label>
+			
+			<br>
+			
+			<label>
+				Type the specifications in the space below (Type N/A if you picked "N/A" for the last option) :
 				<input type="text" name="resize">
+			</label>
+			
+			<label>
+				Do you have any other special instructions in regards to this dimension?
+			</label>
+			<label>
+				<input type="radio" name="ifDimSpec" value="yes"> Yes
+			</label>
+			<br>
+			<label>
+				<input type="radio" name="ifDimSpec" value="no"> No
+			</label>
+			
+			<label>
+				If you chose "Yes" for the last option, specify here (Type N/A if you did not) :
+				<input type="text" name="dimSpec">
 			</label>
 
 			<br>
-
+			
+			
 			<label>
 				Do you need to check the status of an undelivered order? If so, your tailor will send a response to the email attached to your account.
 			</label>
