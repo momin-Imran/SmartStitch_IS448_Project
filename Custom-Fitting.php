@@ -1,6 +1,79 @@
 <?php
 
-    include_once('config.php');
+include_once('../config.php');
+
+session_start();
+
+$servername = "studentdb-maria.gl.umbc.edu";
+$username = "eubini1"; // replace with your DB username
+$password = "eubini1"; // replace with your DB password
+$database = "eubini1"; // replace with your DB name
+
+
+$db =  mysqli_connect($servername, $username, $password, $database);
+
+// Check connection
+if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
+
+
+if ($_Server["REQUEST_METHOD"]=="POST" ){
+    if(
+        isset($_POST['email']) && !empty($_POST['email'])
+    ){
+        $email = trim(htmlspecialchars($_POST['email']));
+        $email = mysqli_real_escape_string($db, $email);
+
+        $queryUser = "SELECT user_id FROM Users WHERE email = '$email' ";
+        $ResUser = mysqli_query($db, $queryUser);
+        if (! $ResUser || mysqli_num_rows($ResUser) !== 1) {
+            echo "<script>alert('No user found with that email.');</script>";
+            exit;
+        }
+        $user_id = mysqli_fetch_assoc($ResUser)['user_id'];
+
+        // first INSERT: link Customer → user_id
+        $queryCustomer = "INSERT INTO Customer (user_id) VALUES ('$uid')";
+        if (! mysqli_query($db, $queryCustomer)) {
+        $err = mysqli_error($db);
+        echo "<script>alert('Failed to create customer link: $err');</script>";
+        exit;
+        }
+        $Customer_ID = mysql_insert_id($db);
+
+
+        // sanitize & prepare measurements (NULL if blank)
+        $chest  = ($_POST['chest']   !== "") ? floatval($_POST['chest'])   : "NULL";
+        $waist  = ($_POST['waist']   !== "") ? floatval($_POST['waist'])   : "NULL";
+        $neck   = ($_POST['neck']    !== "") ? floatval($_POST['neck'])    : "NULL";
+        $shoulder = ($_POST['shoulder']!== "") ? floatval($_POST['shoulder']): "NULL";
+        $arm    = ($_POST['arm']     !== "") ? floatval($_POST['arm'])     : "NULL";
+        $inseam = ($_POST['inseam']  !== "") ? floatval($_POST['inseam'])  : "NULL";
+        $hips   = ($_POST['hips']    !== "") ? floatval($_POST['hips'])    : "NULL";
+        $rise   = ($_POST['rise']    !== "") ? floatval($_POST['rise'])    : "NULL";
+        $specInst   = mysqli_real_escape_string($db,trim(htmlspecialchars($_POST['special-instructions'] ?? "")));
+
+        $null = 'null';
+
+
+        $querySizePref = "
+        INSERT INTO SizePrefs (null, customer_id, chest, waist, neck, shoulder, arm, inseam, hips, rise, specInst)
+        VALUES ('$null', '$Customer_ID', '$chest', '$neck', '$shoulder', '$arm', '$inseam', '$hips', '$rise', '$specInst')";
+
+        if (! mysqli_query($db, $querySizePref)) {
+            $err = mysqli_error($db);
+            echo "<script>alert('Failed to save measurements: $err');</script>";
+            exit;
+        }
+
+        // success
+        echo "<script>alert('Measurements saved successfully!');</script>";
+        header("Location: thank-you.html");
+        exit;
+    } else {
+        echo "<script>alert('Please enter your email to link records.');</script>";
+    }
+
+}   
 
 ?>
 
