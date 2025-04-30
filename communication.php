@@ -10,24 +10,24 @@ session_start();
 	
 	$db = mysqli_connect("studentdb-maria.gl.umbc.edu", "eubini1", "eubini1", "eubini1");
 
-    if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
+        if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
 	
 	if (isset($_SESSION["user_id"]) 
 	{
-		$user = $_SESSION["login_user"];
+		$user = $_SESSION["user_id"];
 		
 		$allergenSet = if ((isset($_POST["ifAllerg"]) && !empty($_POST["ifAllerg"])) &&
 		                   (isset($_POST["allergens"]) && !empty($_POST["allergens"])) &&
-						   (isset($_POST["severity"]) && !empty($_POST["severity"]))
-						  );
+			           (isset($_POST["severity"]) && !empty($_POST["severity"]))
+				  );
 						  
 		$sizeSet = if ((isset($_POST["ifResize"]) && !empty($_POST["ifResize"])) &&
 		               (isset($_POST["dimen"]) && !empty($_POST["dimen"])) &&
-					   (isset($_POST["otherDim"]) && !empty($_POST["otherDim"])) &&
-					   (isset($_POST["resize"]) && !empty($_POST["resize"]))
-					   (isset($_POST["ifDimSpec"]) && !empty($_POST["ifDimSpec"])) &&
-					   (isset($_POST["dimSpec"]) && !empty($_POST["dimSpec"]))
-					  );
+			       (isset($_POST["otherDim"]) && !empty($_POST["otherDim"])) &&
+			       (isset($_POST["resize"]) && !empty($_POST["resize"]))
+			       (isset($_POST["ifDimSpec"]) && !empty($_POST["ifDimSpec"])) &&
+			       (isset($_POST["dimSpec"]) && !empty($_POST["dimSpec"]))
+			      );
 		
 		if ((isset($_POST["tailor"]) && !empty($_POST["tailor"])) &&
 			(isset($_POST["status"]) && !empty($_POST["status"])) &&
@@ -62,62 +62,71 @@ session_start();
 					
 					$appendSize = "INSERT INTO SizePrefs(customer_id, chest) VALUES ($user , $resize)";
 					if ($ifDimSpec) {
-						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE customer_id=$user";
+						$sizeId = mysqli_insert_id($db);
+						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE size_id=$sizeId;
 					}
 					
 				} else if ($dimen == "waist") {
 					
 					$appendSize = "INSERT INTO SizePrefs(customer_id, waist) VALUES ($user , $resize)";
 					if ($ifDimSpec) {
-						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE customer_id=$user";
+     						$sizeId = mysqli_insert_id($db);
+						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE size_id=$sizeId";
 					}
 					
 				} else if ($dimen == "neck") {
 					
 					$appendSize = "INSERT INTO SizePrefs(customer_id, neck) VALUES ($user , $resize)";
 					if ($ifDimSpec) {
-						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE customer_id=$user";
+          					$sizeId = mysqli_insert_id($db);
+						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE size_id=$sizeId";
 					}
 					
 				} else if ($dimen == "shoulder") {
 					
 					$appendSize = "INSERT INTO SizePrefs(customer_id, shoulder) VALUES ($user , $resize)";
 					if ($ifDimSpec) {
-						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE customer_id=$user";
+          					$sizeId = mysqli_insert_id($db);
+						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE size_id=$sizeId";
 					}
 					
 				} else if ($dimen == "arm") {
 					
 					$appendSize = "INSERT INTO SizePrefs(customer_id, arm) VALUES ($user , $resize)";
 					if ($ifDimSpec) {
-						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE customer_id=$user";
+          					$sizeId = mysqli_insert_id($db);
+						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE size_id=$sizeId";
 					}
 					
 				} else if ($dimen == "inseam") {
 					
 					$appendSize = "INSERT INTO SizePrefs(customer_id, inseam) VALUES ($user , $resize)";
 					if ($ifDimSpec) {
-						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE customer_id=$user";
+          					$sizeId = mysqli_insert_id($db);
+						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE size_id=$sizeId";
 					}
 					
 				} else if ($dimen == "hips") {
 					
 					$appendSize = "INSERT INTO SizePrefs(customer_id, hips) VALUES ($user , $resize)";
 					if ($ifDimSpec) {
-						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE customer_id=$user";
+          					$sizeId = mysqli_insert_id($db);
+						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE size_id=$sizeId";
 					}
 					
 				} else if ($dimen == "rise") {
 					
 					$appendSize = "INSERT INTO SizePrefs(customer_id, rise) VALUES ($user , $resize)";
 					if ($ifDimSpec) {
-						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE customer_id=$user";
+          					$sizeId = mysqli_insert_id($db);
+						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE size_id=$sizeId";
 					}
 					
 				} else if ($dimen == "other") {
 					$appendSize = "INSERT INTO SizePrefsOther(dimension, measure) VALUES ($otherDim , $resize)";
 					if ($ifDimSpec) {
-						$addSpec = "UPDATE SizePrefsOther SET specInst=$dimSpec WHERE pref_id=pref_id";
+          					$prefId = mysqli_insert_id($db);
+						$addSpec = "UPDATE SizePrefsOther SET specInst=$dimSpec WHERE pref_id=prefId";
 					}
 				}
 				
