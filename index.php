@@ -26,7 +26,7 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
         header("Location: $BASE_URL/customer/cust_login.php");
         exit();
     } else {
-        echo "<p>Welcome, " . $_SESSION['first_name'] . " " . $_SESSION['last_name'] . "</p>";
+        echo "<p>Welcome, " . $_SESSION['first_name'] . " " . $_SESSION['last_name'] . "!</p>";
         echo "<p>Your email: " . $_SESSION['email'] . "</p>";
     }
 
@@ -62,63 +62,117 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
         <br>
         <h3>Shop Our Collection</h3>
         <div class="product-container">
-            <div class="product">
-                <img src="assets/cotton_shirts.jpg" alt="Stylish Cotton Shirt" width="150">
-                <h4>Stylish Cotton Shirt</h4>
-                <p>$29.99</p>
-                <button class="add-cart">Add to Cart</button> <!-- will add php functioality to cart in the future -->
-                <!-- Goal is for Deliverable 6: turn this into a form that submits the product_id to purchase.php (new file) and then shows a simple “Order Confirmed” page. 
-                 Also, INSERT into Purchases tabble (using Products for catalog). -->
+        
+        <div class="product">
+            <img src="assets/cotton_shirts.jpg" alt="Stylish Cotton Shirt" width="150">
+            <h4>Stylish Cotton Shirt</h4>
+            <p>$29.99</p>
+            <form method="POST" action="<?php echo $BASE_URL; ?>/add_to_cart.php">
+                <input type="hidden" name="product_id" value="1">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
 
-            </div>
-            <div class="product">
-                <img src="assets/denim.jpg" alt="Classic Denim Jeans" width="150">
-                <h4>Classic Denim Jeans</h4>
-                <p>$49.99</p>
-                <button class="add-cart">Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-                <h4>Elegant Evening Dress</h4>
-                <p>$79.99</p>
-                <button class="add-cart">Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="assets/cotton_shirts.jpg" alt="Stylish Cotton Shirt" width="150">
-                <h4>Stylish Cotton Shirt</h4>
-                <p>$29.99</p>
-                <button class="add-cart">Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="assets/cotton_shirts.jpg" alt="Stylish Cotton Shirt" width="150">
-                <h4>Stylish Cotton Shirt</h4>
-                <p>$29.99</p>
-                <button class="add-cart">Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="assets/cotton_shirts.jpg" alt="Stylish Cotton Shirt" width="150">
-                <h4>Stylish Cotton Shirt</h4>
-                <p>$29.99</p>
-                <button class="add-cart">Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-                <h4>Elegant Evening Dress</h4>
-                <p>$79.99</p>
-                <button class="add-cart">Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-                <h4>Elegant Evening Dress</h4>
-                <p>$79.99</p>
-                <button class="add-cart">Add to Cart</button>
-            </div>
-            <div class="product">
-                <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-                <h4>Elegant Evening Dress</h4>
-                <p>$79.99</p>
-                <button class="add-cart">Add to Cart</button>
-            </div>
+        
+        <div class="product">
+            <img src="assets/denim.jpg" alt="Classic Denim Jeans" width="150">
+            <h4>Classic Denim Jeans</h4>
+            <p>$49.99</p>
+            <form method="POST" action="<?php echo $BASE_URL; ?>/add_to_cart.php">
+                <input type="hidden" name="product_id" value="2">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+
+        
+        <div class="product">
+            <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
+            <h4>Elegant Evening Dress</h4>
+            <p>$79.99</p>
+            <form method="POST" action="<?php echo $BASE_URL; ?>/add_to_cart.php">
+                <input type="hidden" name="product_id" value="3">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+
+        <div class="product">
+            <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
+            <h4>Elegant Evening Dress</h4>
+            <p>$79.99</p>
+            <form method="POST" action="<?php echo $BASE_URL; ?>/add_to_cart.php">
+                <input type="hidden" name="product_id" value="3">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+
+        <div class="product">
+            <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
+            <h4>Elegant Evening Dress</h4>
+            <p>$79.99</p>
+            <form method="POST" action="<?php echo $BASE_URL; ?>/add_to_cart.php">
+                <input type="hidden" name="product_id" value="3">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+
+        <div class="product">
+            <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
+            <h4>Elegant Evening Dress</h4>
+            <p>$79.99</p>
+            <form method="POST" action="<?php echo $BASE_URL; ?>/add_to_cart.php">
+                <input type="hidden" name="product_id" value="3">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+
+        <div class="product">
+            <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
+            <h4>Elegant Evening Dress</h4>
+            <p>$79.99</p>
+            <form method="POST" action="<?php echo $BASE_URL; ?>/add_to_cart.php">
+                <input type="hidden" name="product_id" value="3">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+
+        <div class="product">
+            <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
+            <h4>Elegant Evening Dress</h4>
+            <p>$79.99</p>
+            <form method="POST" action="<?php echo $BASE_URL; ?>/add_to_cart.php">
+                <input type="hidden" name="product_id" value="3">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+
+        <div class="product">
+            <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
+            <h4>Elegant Evening Dress</h4>
+            <p>$79.99</p>
+            <form method="POST" action="<?php echo $BASE_URL; ?>/add_to_cart.php">
+                <input type="hidden" name="product_id" value="3">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+
+        <div class="product">
+            <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
+            <h4>Elegant Evening Dress</h4>
+            <p>$79.99</p>
+            <form method="POST" action="<?php echo $BASE_URL; ?>/add_to_cart.php">
+                <input type="hidden" name="product_id" value="3">
+                <button type="submit">Add to Cart</button>
+            </form>
+        </div>
+
+        <div class="product">
+            <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
+            <h4>Elegant Evening Dress</h4>
+            <p>$79.99</p>
+            <form method="POST" action="<?php echo $BASE_URL; ?>/add_to_cart.php">
+                <input type="hidden" name="product_id" value="3">
+                <button type="submit">Add to Cart</button>
+            </form>
         </div>
     </div>
 
