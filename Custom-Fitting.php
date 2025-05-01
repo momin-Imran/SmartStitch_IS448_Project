@@ -35,13 +35,13 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
         $user_id = mysqli_fetch_assoc($ResUser)['user_id'];
 
         // first INSERT: link Customer → user_id
-        $queryCustomer = "INSERT INTO Customer (user_id) VALUES ('$uid')";
+        $queryCustomer = "INSERT INTO Customer (user_id) VALUES ('$user_id')";
         if (! mysqli_query($db, $queryCustomer)) {
         $err = mysqli_error($db);
         echo "<script>alert('Failed to create customer link: $err');</script>";
         exit;
         }
-        $Customer_ID = mysql_insert_id($db);
+        $Customer_ID = mysqli_insert_id($db);
 
 
         // sanitize & prepare measurements (NULL if blank)
@@ -55,12 +55,10 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
         $rise   = ($_POST['rise']    !== "") ? floatval($_POST['rise'])    : "NULL";
         $specInst   = mysqli_real_escape_string($db,trim(htmlspecialchars($_POST['special-instructions'] ?? "")));
 
-        $null = 'null';
-
 
         $querySizePref = "
-        INSERT INTO SizePrefs (null, customer_id, chest, waist, neck, shoulder, arm, inseam, hips, rise, specInst)
-        VALUES ('$null', '$Customer_ID', '$chest', '$waist', '$neck', '$shoulder', '$arm', '$inseam', '$hips', '$rise', '$specInst')";
+        INSERT INTO SizePrefs (customer_id, chest, waist, neck, shoulder, arm, inseam, hips, rise, specInst)
+        VALUES ('$Customer_ID', '$chest', '$waist', '$neck', '$shoulder', '$arm', '$inseam', '$hips', '$rise', '$specInst')";
 
         if (! mysqli_query($db, $querySizePref)) {
             $err = mysqli_error($db);
