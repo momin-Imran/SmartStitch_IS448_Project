@@ -4,6 +4,6 @@
         $BASE_URL = '';
     } else {
         // Running on UMBC server
-        $BASE_URL = '/~momini1/is448/SmartStitch_IS448_Project';
+        $BASE_URL = '/~eubini1/is448/SmartStitch_IS448_Project';
     }
 ?>
