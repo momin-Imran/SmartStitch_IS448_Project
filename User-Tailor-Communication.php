@@ -4,16 +4,18 @@
               status, concerns about their order after they have recieved the product, and any other concerns they may have. This form submits data for processing.
 
  -->
-session_start();
 
 <?php
+	
+	include_once('config.php');
+	session_start();
 
 	if (!isset($_SESSION["user_id"])) {
 		header("locaton: $BASE_URL/customer/cust_login.php");
 		exit();
 	}
 		
-	include_once('config.php');
+	
 	
 	$db = mysqli_connect("studentdb-maria.gl.umbc.edu", "eubini1", "eubini1", "eubini1");
 
