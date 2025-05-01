@@ -108,7 +108,7 @@ Description: Register and login page for the smart clothing store
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
     </script>
-    <script src="<?php echo $BASE_URL; ?>/customer/cust_register.js"></script>
+    <script src="<?php echo $BASE_URL; ?>/customer/cust_login.js"></script>
 </body>
 
 </html>

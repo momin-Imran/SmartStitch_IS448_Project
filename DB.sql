@@ -73,9 +73,7 @@ create table Users (
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Insert a sample tailor
-INSERT INTO Customer (cust_title, cust_first_name, cust_last_name, cust_email, cust_phone, cust_password)
-VALUES ('Mr', 'Declan', 'Rice', 'rice@example.com', '123-456-7890', 'password123');
+
 ------------------------------------------------------------------------------------------------------------------------------
 -- Author : Taurus Hink
 -- Description : This SQL code creates a set of tables to be used in relation to user data and communications to be used on the user-tailor communication page / use case.
