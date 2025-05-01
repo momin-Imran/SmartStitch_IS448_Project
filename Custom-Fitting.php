@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
 
         $querySizePref = "
         INSERT INTO SizePrefs (null, customer_id, chest, waist, neck, shoulder, arm, inseam, hips, rise, specInst)
-        VALUES ('$null', '$Customer_ID', '$chest', '$neck', '$shoulder', '$arm', '$inseam', '$hips', '$rise', '$specInst')";
+        VALUES ('$null', '$Customer_ID', '$chest', '$waist', '$neck', '$shoulder', '$arm', '$inseam', '$hips', '$rise', '$specInst')";
 
         if (! mysqli_query($db, $querySizePref)) {
             $err = mysqli_error($db);
