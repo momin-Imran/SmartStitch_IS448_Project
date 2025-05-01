@@ -63,7 +63,7 @@ session_start();
 					$appendSize = "INSERT INTO SizePrefs(customer_id, chest) VALUES ($user , $resize)";
 					if ($ifDimSpec) {
 						$sizeId = mysqli_insert_id($db);
-						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE size_id=$sizeId;
+						$addSpec = "UPDATE SizePrefs SET specInst=$dimSpec WHERE size_id=$sizeId";
 					}
 					
 				} else if ($dimen == "waist") {
