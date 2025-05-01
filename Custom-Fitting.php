@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include_once('config.php');
 
 session_start();
@@ -17,6 +19,7 @@ if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
 
 
 if ($_Server["REQUEST_METHOD"]=="POST" ){
+    echo '<pre>POST payload → ', htmlentities(print_r($_POST, true)), '</pre>';
     if(
         isset($_POST['email']) && !empty($_POST['email'])
     ){
