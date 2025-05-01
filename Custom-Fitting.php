@@ -18,7 +18,7 @@ $db =  mysqli_connect($servername, $username, $password, $database);
 if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
 
 
-if ($_Server["REQUEST_METHOD"]=="POST" ){
+if ($_SERVER["REQUEST_METHOD"]=="POST" ){
     echo '<pre>POST payload → ', htmlentities(print_r($_POST, true)), '</pre>';
     if(
         isset($_POST['email']) && !empty($_POST['email'])
