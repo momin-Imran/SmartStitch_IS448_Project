@@ -106,7 +106,7 @@ if ($_Server["REQUEST_METHOD"]=="POST" ){
     <section id="user-contact">
         <h2>Please enter your information:</h2>
         <h3>If you do not know your measurements you may leave those blank and answer what you do know.</h3>
-        <form id="contact-information" method="POST" action="GuestInformation.php">
+        <form id="contact-information" method="POST" action="Custom-Fitting.php">
             <fieldset class="GuestContact">
                 <label for="first-name">First Name: </label>
                 <input type="name" name="first" max="50" required>
