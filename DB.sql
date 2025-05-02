@@ -13,11 +13,19 @@
 CREATE DATABASE IF NOT EXISTS SmartClothingStore;
 USE SmartClothingStore;
 
--- Tailors table stores tailor login credentials
+-- Users table stores user login credentials
+CREATE TABLE IF NOT EXISTS Users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Tailors table links to Users
 CREATE TABLE IF NOT EXISTS Tailors (
     tailor_id INT AUTO_INCREMENT PRIMARY KEY,
-	user_id INT NOT NULL UNIQUE,
-	foreign key (user_id) references Users(user_id) on delete cascade
+    user_id INT NOT NULL UNIQUE,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
 -- Availability table links tailor to available time slots
@@ -33,11 +41,15 @@ CREATE TABLE IF NOT EXISTS Availability (
 -- Add index for faster lookup on date and time_slot
 CREATE INDEX idx_date_time ON Availability(date, time_slot);
 
--- Insert sample tailors
-INSERT INTO Tailors (name, email, password) VALUES
-('John Doe', 'john@example.com', 'password123'),
-('Jane Smith', 'tailor@example.com', 'password123')
-ON DUPLICATE KEY UPDATE email=email;
+-- Insert sample users with hashed passwords (use PHP's password_hash to generate hashes)
+INSERT INTO Users (name, email, password) VALUES
+('John Doe', 'john@example.com', '$2y$10$e0NRzQ1YQ1Z1Q1Z1Q1Z1QO1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q'), -- replace with actual hash
+('Jane Smith', 'tailor@example.com', '$2y$10$e0NRzQ1YQ1Z1Q1Z1Q1Z1QO1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q'); -- replace with actual hash
+
+-- Insert sample tailors linked to users
+INSERT INTO Tailors (user_id) VALUES
+((SELECT user_id FROM Users WHERE email = 'john@example.com')),
+((SELECT user_id FROM Users WHERE email = 'tailor@example.com'));
 
 -- Insert sample availability for tailor_id = 1 (John Doe)
 INSERT INTO Availability (tailor_id, date, time_slot) VALUES
