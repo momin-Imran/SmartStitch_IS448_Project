@@ -41,10 +41,10 @@ CREATE TABLE IF NOT EXISTS Availability (
 -- Add index for faster lookup on date and time_slot
 CREATE INDEX idx_date_time ON Availability(date, time_slot);
 
--- Insert sample users with hashed passwords (use PHP's password_hash to generate hashes)
+-- Insert sample users with actual hashed passwords (generated using PHP's password_hash function)
 INSERT INTO Users (name, email, password) VALUES
-('John Doe', 'john@example.com', '$2y$10$e0NRzQ1YQ1Z1Q1Z1Q1Z1QO1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q'), -- replace with actual hash
-('Jane Smith', 'tailor@example.com', '$2y$10$e0NRzQ1YQ1Z1Q1Z1Q1Z1QO1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q1Z1Q'); -- replace with actual hash
+('John Doe', 'john@example.com', '$2y$10$Wz3Eydnx64EpL3eWP/j1pOmVOj3iSZclHctoxe5Fcx1XjIJFmZ7wC'), -- password: password123
+('Jane Smith', 'tailor@example.com', '$2y$10$gNXqDZbPeSkS/x0EZkhr3unGo1SNXp8EUCLCMDMHNfe09AH60xBuS'); -- password: TailorPass2024
 
 -- Insert sample tailors linked to users
 INSERT INTO Tailors (user_id) VALUES
