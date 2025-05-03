@@ -11,7 +11,7 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
     session_start();
 
     // 1. Check if session expired
-    $timeout_duration = 15; // 15 seconds
+    $timeout_duration = 1500; // 15 seconds
     if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout_duration)) {
         session_unset(); // Unset session variables
         session_destroy(); // Destroy the session
