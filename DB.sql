@@ -8,6 +8,7 @@
   Usage: Import this file into phpMyAdmin to set up 
          the necessary database structure and test data.
 --------------------------------------------------------
+*/
 -- Create the database
 CREATE DATABASE IF NOT EXISTS SmartClothingStore;
 USE SmartClothingStore;
