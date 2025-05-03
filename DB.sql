@@ -8,7 +8,6 @@
   Usage: Import this file into phpMyAdmin to set up 
          the necessary database structure and test data.
 --------------------------------------------------------
-*/
 -- Create the database
 CREATE DATABASE IF NOT EXISTS SmartClothingStore;
 USE SmartClothingStore;
@@ -37,16 +36,6 @@ CREATE TABLE IF NOT EXISTS Availability (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (tailor_id) REFERENCES Tailors(tailor_id) ON DELETE CASCADE
 );
-
--- Check if the index exists and create it if it doesn't
-SET @index_exists = (SELECT COUNT(*) FROM information_schema.statistics 
-                     WHERE table_schema = 'SmartClothingStore' 
-                     AND table_name = 'Availability' 
-                     AND index_name = 'idx_date_time');
-
-IF @index_exists = 0 THEN
-    CREATE INDEX idx_date_time ON Availability(date, time_slot);
-END IF;
 
 -- Insert sample users with actual hashed passwords (generated using PHP's password_hash function)
 INSERT INTO Users (name, email, password) VALUES
