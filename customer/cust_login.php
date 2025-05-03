@@ -53,6 +53,14 @@ Description: Register and login page for the smart clothing store
                     $_SESSION['title'] = $row['title'];
                     $_SESSION['role'] = $row['role'];
 
+                    if ($row['role'] == 'tailor') {
+                        $_SESSION['tailor_id'] = $row['user_id'];
+                        $_SESSION['tailor_email'] = $row['email'];
+                    } else if ($row['role'] == 'customer') {
+                        $_SESSION['customer_id'] = $row['user_id'];
+                        $_SESSION['customer_email'] = $row['email'];
+                    }
+
                     // Login successful, redirect to homepage
                     header("Location: $BASE_URL/index.php");
                     exit();
