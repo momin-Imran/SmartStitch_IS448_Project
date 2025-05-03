@@ -6,7 +6,12 @@ Description: Register and login page for the smart clothing store
 <?php
     include_once('../config.php');
 
+
+
     session_start();
+
+    
+
     #connect to mysql database
     $db = mysqli_connect("studentdb-maria.gl.umbc.edu", "eubini1", "eubini1", "eubini1");
 
@@ -54,6 +59,8 @@ Description: Register and login page for the smart clothing store
                 } else {
                     echo "<script>alert('Invalid email or password. Please try again.');</script>";
                 }
+            } else {
+                echo "<script>alert('Invalid email or password. Please try again.');</script>";
             }
         } else {
             echo "all fields must be filled out";
