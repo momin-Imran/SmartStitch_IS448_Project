@@ -11,7 +11,7 @@ updateAvailability.php for processing.
 */
 
 // Include configuration file (useful for constants or DB reuse)
-include_once('config.php');
+include_once('../config.php');
 
 // Start or resume the current session
 session_start();

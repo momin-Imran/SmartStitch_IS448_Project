@@ -8,7 +8,7 @@ Preset Tailor Log In credentials: john@example.com / password123
 
 
 <?php
-    include_once('config.php');
+include_once('config.php');
 ?>
 
 <!DOCTYPE html>
@@ -35,22 +35,22 @@ Preset Tailor Log In credentials: john@example.com / password123
     <!-- Tailor Login Form -->
     <!-- <h2>Tailor Login</h2> -->
     <!-- <form id="loginForm" method="POST" action="login.php"> -->
-        <!-- Input for email with placeholder -->
-        <!-- <label for="email">Email:</label> -->
-        <!-- <input type="email" id="email" name="email" placeholder="john@example.com" required> -->
+    <!-- Input for email with placeholder -->
+    <!-- <label for="email">Email:</label> -->
+    <!-- <input type="email" id="email" name="email" placeholder="john@example.com" required> -->
 
-        <!-- Input for password with placeholder -->
-        <!-- <label for="password">Password:</label> -->
-        <!-- <input type="password" id="password" name="password" placeholder="password123" required> -->
+    <!-- Input for password with placeholder -->
+    <!-- <label for="password">Password:</label> -->
+    <!-- <input type="password" id="password" name="password" placeholder="password123" required> -->
 
-        <!-- Submit button for login -->
-        <!-- <button type="submit">Login</button> -->
+    <!-- Submit button for login -->
+    <!-- <button type="submit">Login</button> -->
     <!-- </form> -->
 
     <!-- Availability Update Section -->
     <h2>Update Availability</h2>
     <!-- PHP code work in progress -->
-    <form id="availabilityForm" method="POST" action="updateAvailability.php">
+    <form id="availabilityForm" method="POST" action="<?php echo $BASE_URL; ?>/usecase3/updateAvailability.php">
 
         <!-- Weekly Calendar Table for Selecting Availability -->
         <table>
