@@ -10,15 +10,15 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
 
     session_start();
 
-    // 1. Check if session expired
-    $timeout_duration = 1500; // 15 seconds
-    if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout_duration)) {
-        session_unset(); // Unset session variables
-        session_destroy(); // Destroy the session
-        header("Location: $BASE_URL/customer/cust_login.php"); // Redirect to login page
-        exit();
-    }
-    $_SESSION['LAST_ACTIVITY'] = time(); //2 Update last activity time
+    // // 1. Check if session expired
+    // $timeout_duration = 1500; // 15 seconds
+    // if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout_duration)) {
+    //     session_unset(); // Unset session variables
+    //     session_destroy(); // Destroy the session
+    //     header("Location: $BASE_URL/customer/cust_login.php"); // Redirect to login page
+    //     exit();
+    // }
+    // $_SESSION['LAST_ACTIVITY'] = time(); //2 Update last activity time
 
 
     // 3. Check if user is logged in
