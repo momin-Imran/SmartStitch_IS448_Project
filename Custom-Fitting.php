@@ -9,6 +9,13 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 session_start();
 
+// Check if the customer is logged in by verifying session variables
+if (!isset($_SESSION['customer_email'])) {
+    // Redirect to login if not authenticated
+    header("Location: $BASE_URL/customer/cust_login.php");
+    exit();
+}
+
 $servername = "studentdb-maria.gl.umbc.edu";
 $username = "eubini1"; // replace with your DB username
 $password = "eubini1"; // replace with your DB password

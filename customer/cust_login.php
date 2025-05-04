@@ -42,9 +42,18 @@ Description: Register and login page for the smart clothing store
 
             if (mysqli_num_rows($result) == 1) {
                 $row = mysqli_fetch_assoc($result);
-                
+
+
+
                 // Check hashed password
                 if (password_verify($password, $row['password'])) {
+
+                    // Unset all session variables
+                    $_SESSION = [];
+
+                    // Destroy the session
+                    session_destroy();
+                    session_start(); // Start a new session
                     $_SESSION['user_id'] = $row['user_id'];
                     $_SESSION['email'] = $row['email'];
                     $_SESSION['first_name'] = $row['first_name'];
@@ -60,6 +69,7 @@ Description: Register and login page for the smart clothing store
                         $_SESSION['customer_id'] = $row['user_id'];
                         $_SESSION['customer_email'] = $row['email'];
                     }
+
 
                     // Login successful, redirect to homepage
                     header("Location: $BASE_URL/index.php");

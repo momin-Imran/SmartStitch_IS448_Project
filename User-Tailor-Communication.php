@@ -6,12 +6,16 @@
  -->
 
 <?php
+
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
 	
 	include_once('config.php');
 	session_start();
 
 	if (!isset($_SESSION["user_id"])) {
-		header("locaton: $BASE_URL/customer/cust_login.php");
+		header("Location: $BASE_URL/customer/cust_login.php");
 		exit();
 	}
 		
@@ -85,7 +89,7 @@
 
 			<br>
 			
-			<!-- Allergens section --!>
+			<!-- Allergens section 
 			
 			<label>
 				Do you need to add a potential allergen of concern?
@@ -125,7 +129,7 @@
 			
 			<br>
 			
-			<!-- Resize Order Section --!>
+	
 			
 			<label>
 				Do you need to resize any dimension of your order?
