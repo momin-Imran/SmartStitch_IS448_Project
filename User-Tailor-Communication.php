@@ -89,7 +89,7 @@
 
 			<br>
 			
-			<!-- Allergens section 
+			<!-- Allergens section -->
 			
 			<label>
 				Do you need to add a potential allergen of concern?
