@@ -6,12 +6,12 @@
     if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
 
     // User info
-    $phone = '5467811234';
+    $phone = '5467111231';
     $password = '12345678Ab';
-    $last_name = 'Levin';
-    $first_name = 'Keith';
+    $last_name = 'Saint';
+    $first_name = 'Sammy';
     $title = 'Mr';
-    $email = 'g@g.com';
+    $email = 'q@q.com';
 
     $password = trim(htmlspecialchars($password));
     $email = trim(htmlspecialchars($email));
