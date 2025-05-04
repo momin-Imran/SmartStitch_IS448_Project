@@ -2,13 +2,14 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-include_once('config.php');
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 
 session_start();
 
 $servername = "studentdb-maria.gl.umbc.edu";
 $username = "eubini1"; // replace with your DB username
-$password = "eubini1"; // replace with your DB password
+$password = "eubini1!"; // replace with your DB password
 $database = "eubini1"; // replace with your DB name
 
 
@@ -22,57 +23,81 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
     echo '<pre>POST payload → ', htmlentities(print_r($_POST, true)), '</pre>';
     if(
         isset($_POST['email']) && !empty($_POST['email'])
-    ){
+    )
+    {
         $email = trim(htmlspecialchars($_POST['email']));
         $email = mysqli_real_escape_string($db, $email);
 
         $queryUser = "SELECT user_id FROM Users WHERE email = '$email' ";
         $ResUser = mysqli_query($db, $queryUser);
-        if (! $ResUser || mysqli_num_rows($ResUser) !== 1) {
+
+        echo '<pre> Found users: ' 
+        . mysqli_num_rows($ResUser) 
+        . "\nFull SQL: $queryUser</pre>";
+
+        if (! $ResUser || mysqli_num_rows($ResUser) !==1) {
             echo "<script>alert('No user found with that email.');</script>";
-            exit;
+ 
         }
+
         $user_id = mysqli_fetch_assoc($ResUser)['user_id'];
 
-        // first INSERT: link Customer → user_id
-        $queryCustomer = "INSERT INTO Customer (user_id) VALUES ('$user_id')";
-        if (! mysqli_query($db, $queryCustomer)) {
+        //Lookup customer_id from user
+        $queryCustomer = "SELECT customer_id FROM Customer WHERE user_id = $user_id";
+        $resCustomer = mysqli_query($db, $queryCustomer);
+
+        // check for SQL errors
+        if (! $resCustomer) {
         $err = mysqli_error($db);
-        echo "<script>alert('Failed to create customer link: $err');</script>";
+        echo "<script>alert('Customer lookup failed: $err');</script>";
         exit;
         }
-        $Customer_ID = mysqli_insert_id($db);
 
+        // make sure exactly one row was returned
+        if (mysqli_num_rows($resCustomer) !== 1) {
+            echo "<script>alert('No Customer record found for this user.');</script>";
+            exit;
+        }
+
+        // pull out the customer_id
+        $row = mysqli_fetch_assoc($resCustomer);
+        $Customer_ID = $row['customer_id'];
+
+        function numOrNull($val) {
+            return ($val !== '') 
+              ? floatval($val) 
+              : 'NULL';
+        }
 
         // sanitize & prepare measurements (NULL if blank)
-        $chest  = ($_POST['chest']   !== "") ? floatval($_POST['chest'])   : "NULL";
-        $waist  = ($_POST['waist']   !== "") ? floatval($_POST['waist'])   : "NULL";
-        $neck   = ($_POST['neck']    !== "") ? floatval($_POST['neck'])    : "NULL";
-        $shoulder = ($_POST['shoulder']!== "") ? floatval($_POST['shoulder']): "NULL";
-        $arm    = ($_POST['arm']     !== "") ? floatval($_POST['arm'])     : "NULL";
-        $inseam = ($_POST['inseam']  !== "") ? floatval($_POST['inseam'])  : "NULL";
-        $hips   = ($_POST['hips']    !== "") ? floatval($_POST['hips'])    : "NULL";
-        $rise   = ($_POST['rise']    !== "") ? floatval($_POST['rise'])    : "NULL";
-        $specInst   = mysqli_real_escape_string($db,trim(htmlspecialchars($_POST['special-instructions'] ?? "")));
-
-
-        $querySizePref = "
-        INSERT INTO SizePrefs (customer_id, chest, waist, neck, shoulder, arm, inseam, hips, rise, specInst)
-        VALUES ('$Customer_ID', '$chest', '$waist', '$neck', '$shoulder', '$arm', '$inseam', '$hips', '$rise', '$specInst')";
+        $chest    = numOrNull($_POST['chest']   ?? '');
+        $waist    = numOrNull($_POST['waist']   ?? '');
+        $neck     = numOrNull($_POST['neck']    ?? '');
+        $shoulder = numOrNull($_POST['shoulder']?? '');
+        $arm     = numOrNull($_POST['arm']     ?? '');
+        $inseam   = numOrNull($_POST['inseam']  ?? '');
+        $hips     = numOrNull($_POST['hips']    ?? '');
+        $rise     = numOrNull($_POST['rise']    ?? '');
+        
+        // only specInst is truly a string, so escape and quote it:
+        $specInst = mysqli_real_escape_string(
+           $db,
+           trim(htmlspecialchars($_POST['special_instructions'] ?? ''))
+        );
+        
+        
+       
+        $querySizePref = "INSERT INTO SizePrefs(customer_id, chest, waist, neck, shoulder, arm, inseam, hips, rise, specInst)
+            VALUES($Customer_ID, $chest, $waist, $neck, $shoulder, $arm, $inseam, $hips, $rise, '$specInst')";
 
         if (! mysqli_query($db, $querySizePref)) {
-            $err = mysqli_error($db);
-            echo "<script>alert('Failed to save measurements: $err');</script>";
-            exit;
+            die("Insert failed: " . mysqli_error($db));
         }
 
         // success
         echo "<script>alert('Measurements saved successfully!');</script>";
-        header("Location: thank-you.html");
         exit;
-    } else {
-        echo "<script>alert('Please enter your email to link records.');</script>";
-    }
+    } 
 
 }   
 
@@ -95,12 +120,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
 
     <!--Nav Bar-->
     <header id="navbar"></header>
-    <script>
-        // Load the navbar from the external file
-        fetch('<?php echo $BASE_URL; ?>/navbar.php')
-            .then(response => response.text())
-            .then(data => document.getElementById('navbar').innerHTML = data);
-    </script>
+    
     <!--Insert code to pull information from User account if applicable-->
     <!-- Using an If-Else statement for the above, Current code is hypothetical "else" code-->
 
@@ -155,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
 
             <fieldset class="special">
                 <label for="special-instructions">Special Instructions:</label>
-                <textarea id="special-instructions" name="special-instructions" rows="4" placeholder="Any special tailoring requests (500 character limit)..."></textarea>
+                <textarea id="special_instructions" name="special_instructions" rows="4" placeholder="Any special tailoring requests (500 character limit)..."></textarea>
             </fieldset>
 
             <button type="submit">Submit</button>
@@ -167,11 +187,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
 
 
     <header id="footer"></header>
-    <script>
-        fetch('<?php echo $BASE_URL; ?>/footer.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('footer').innerHTML = data);
-    </script>
+    
 
 </body>
 
