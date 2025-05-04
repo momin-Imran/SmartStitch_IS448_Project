@@ -1,4 +1,7 @@
 <?php
+include_once('config.php');
+
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -9,7 +12,7 @@ session_start();
 
 $servername = "studentdb-maria.gl.umbc.edu";
 $username = "eubini1"; // replace with your DB username
-$password = "eubini1!"; // replace with your DB password
+$password = "eubini1"; // replace with your DB password
 $database = "eubini1"; // replace with your DB name
 
 
@@ -19,25 +22,23 @@ $db =  mysqli_connect($servername, $username, $password, $database);
 if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
 
 
-if ($_SERVER["REQUEST_METHOD"]=="POST" ){
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo '<pre>POST payload → ', htmlentities(print_r($_POST, true)), '</pre>';
-    if(
+    if (
         isset($_POST['email']) && !empty($_POST['email'])
-    )
-    {
+    ) {
         $email = trim(htmlspecialchars($_POST['email']));
         $email = mysqli_real_escape_string($db, $email);
 
         $queryUser = "SELECT user_id FROM Users WHERE email = '$email' ";
         $ResUser = mysqli_query($db, $queryUser);
 
-        echo '<pre> Found users: ' 
-        . mysqli_num_rows($ResUser) 
-        . "\nFull SQL: $queryUser</pre>";
+        echo '<pre> Found users: '
+            . mysqli_num_rows($ResUser)
+            . "\nFull SQL: $queryUser</pre>";
 
-        if (! $ResUser || mysqli_num_rows($ResUser) !==1) {
+        if (! $ResUser || mysqli_num_rows($ResUser) !== 1) {
             echo "<script>alert('No user found with that email.');</script>";
- 
         }
 
         $user_id = mysqli_fetch_assoc($ResUser)['user_id'];
@@ -48,9 +49,9 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
 
         // check for SQL errors
         if (! $resCustomer) {
-        $err = mysqli_error($db);
-        echo "<script>alert('Customer lookup failed: $err');</script>";
-        exit;
+            $err = mysqli_error($db);
+            echo "<script>alert('Customer lookup failed: $err');</script>";
+            exit;
         }
 
         // make sure exactly one row was returned
@@ -63,30 +64,31 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
         $row = mysqli_fetch_assoc($resCustomer);
         $Customer_ID = $row['customer_id'];
 
-        function numOrNull($val) {
-            return ($val !== '') 
-              ? floatval($val) 
-              : 'NULL';
+        function numOrNull($val)
+        {
+            return ($val !== '')
+                ? floatval($val)
+                : 'NULL';
         }
 
         // sanitize & prepare measurements (NULL if blank)
         $chest    = numOrNull($_POST['chest']   ?? '');
         $waist    = numOrNull($_POST['waist']   ?? '');
         $neck     = numOrNull($_POST['neck']    ?? '');
-        $shoulder = numOrNull($_POST['shoulder']?? '');
+        $shoulder = numOrNull($_POST['shoulder'] ?? '');
         $arm     = numOrNull($_POST['arm']     ?? '');
         $inseam   = numOrNull($_POST['inseam']  ?? '');
         $hips     = numOrNull($_POST['hips']    ?? '');
         $rise     = numOrNull($_POST['rise']    ?? '');
-        
+
         // only specInst is truly a string, so escape and quote it:
         $specInst = mysqli_real_escape_string(
-           $db,
-           trim(htmlspecialchars($_POST['special_instructions'] ?? ''))
+            $db,
+            trim(htmlspecialchars($_POST['special_instructions'] ?? ''))
         );
-        
-        
-       
+
+
+
         $querySizePref = "INSERT INTO SizePrefs(customer_id, chest, waist, neck, shoulder, arm, inseam, hips, rise, specInst)
             VALUES($Customer_ID, $chest, $waist, $neck, $shoulder, $arm, $inseam, $hips, $rise, '$specInst')";
 
@@ -97,9 +99,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
         // success
         echo "<script>alert('Measurements saved successfully!');</script>";
         exit;
-    } 
-
-}   
+    }
+}
 
 ?>
 
@@ -120,7 +121,13 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
 
     <!--Nav Bar-->
     <header id="navbar"></header>
-    
+    <script>
+        // Load the navbar from the external file
+        fetch('<?php echo $BASE_URL; ?>/navbar.php')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
+
     <!--Insert code to pull information from User account if applicable-->
     <!-- Using an If-Else statement for the above, Current code is hypothetical "else" code-->
 
@@ -187,7 +194,12 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
 
 
     <header id="footer"></header>
-    
+    <script>
+        fetch('<?php echo $BASE_URL; ?>/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+    </script>
+
 
 </body>
 
