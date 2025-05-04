@@ -16,7 +16,7 @@ session_start(); // Start or resume the session
 // Check if the tailor is logged in by verifying session variables
 if (!isset($_SESSION['tailor_email'])) {
     // Redirect to login if not authenticated
-    header("Location: tailor_login.php");
+    header("Location: cust_login.php");
     exit();
 }
 
