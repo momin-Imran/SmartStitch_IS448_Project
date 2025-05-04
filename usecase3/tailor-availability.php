@@ -53,6 +53,10 @@ if (!$db) {
             .then(data => document.getElementById('navbar').innerHTML = data); // Inject into page
     </script>
 
+    <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
+            <p>Your availability has been successfully updated!</p>
+        <?php endif; ?>
+
     <h2>Update Availability</h2>
 
     <!-- Form to collect availability data from tailor -->
@@ -98,13 +102,14 @@ if (!$db) {
         <button type="submit">Update Availability</button> <!-- Submit button to send form data -->
     </form>
 
-    <!-- Footer is dynamically loaded from footer.html using JavaScript -->
-    <footer id="footer"></footer>
+     <!-- Footer is dynamically loaded from footer.html using JavaScript -->
+     <footer id="footer"></footer>
     <script>
         fetch('<?php echo $BASE_URL; ?>/footer.html') // Fetch footer HTML content
             .then(response => response.text()) // Convert response to text
             .then(data => document.getElementById('footer').innerHTML = data); // Inject into page
     </script>
+    
 
 </body>
 
