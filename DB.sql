@@ -142,10 +142,10 @@ CREATE TABLE Orders (
 */
 CREATE TABLE OrderCom (
 	com_id INT AUTO_INCREMENT PRIMARY KEY,
-	order_id INT NOT NULL,
+	/*order_id INT NOT NULL,*/
 	com_date DATE NOT NULL,
 	concern VARCHAR(255) NOT NULL,
-	FOREIGN KEY (order_id) REFERENCES Orders(order_id)
+	/*FOREIGN KEY (order_id) REFERENCES Orders(order_id)*/
 );
 /*
 	The OtherCom table records data for communications not pertaining to orders that have been made (ie general concerns a customer wants to direct to a tailor). This table includes
