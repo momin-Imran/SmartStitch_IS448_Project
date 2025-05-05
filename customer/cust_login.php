@@ -65,14 +65,15 @@ Description: Register and login page for the smart clothing store
                     if ($row['role'] == 'tailor') {
                         $_SESSION['tailor_id'] = $row['user_id'];
                         $_SESSION['tailor_email'] = $row['email'];
+                        // Login successful, redirect to homepage
+                        header("Location: $BASE_URL/usecase3/tailor-availability.php");
                     } else if ($row['role'] == 'customer') {
                         $_SESSION['customer_id'] = $row['user_id'];
                         $_SESSION['customer_email'] = $row['email'];
+                        // Login successful, redirect to homepage
+                        header("Location: $BASE_URL/index.php");
                     }
 
-
-                    // Login successful, redirect to homepage
-                    header("Location: $BASE_URL/index.php");
                     exit();
                 } else {
                     echo "<script>alert('Invalid email or password. Please try again.');</script>";
