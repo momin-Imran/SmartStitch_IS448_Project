@@ -12,22 +12,22 @@ session_start();
 
         if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
 	
-	if (isset($_SESSION["user_id"]) 
+	if (isset($_SESSION["user_id"])) 
 	{
 		$user = $_SESSION["user_id"];
 		
-		$allergenSet = if ((isset($_POST["ifAllerg"]) && !empty($_POST["ifAllerg"])) &&
-		                   (isset($_POST["allergens"]) && !empty($_POST["allergens"])) &&
-			           (isset($_POST["severity"]) && !empty($_POST["severity"]))
-				  );
+		$allergenSet = ((isset($_POST["ifAllerg"]) && !empty($_POST["ifAllerg"])) &&
+		                (isset($_POST["allergens"]) && !empty($_POST["allergens"])) &&
+			        (isset($_POST["severity"]) && !empty($_POST["severity"]))
+			       );
 						  
-		$sizeSet = if ((isset($_POST["ifResize"]) && !empty($_POST["ifResize"])) &&
-		               (isset($_POST["dimen"]) && !empty($_POST["dimen"])) &&
-			       (isset($_POST["otherDim"]) && !empty($_POST["otherDim"])) &&
-			       (isset($_POST["resize"]) && !empty($_POST["resize"]))
-			       (isset($_POST["ifDimSpec"]) && !empty($_POST["ifDimSpec"])) &&
-			       (isset($_POST["dimSpec"]) && !empty($_POST["dimSpec"]))
-			      );
+		$sizeSet =  ((isset($_POST["ifResize"]) && !empty($_POST["ifResize"])) &&
+		             (isset($_POST["dimen"]) && !empty($_POST["dimen"])) &&
+			     (isset($_POST["otherDim"]) && !empty($_POST["otherDim"])) &&
+			     (isset($_POST["resize"]) && !empty($_POST["resize"])) &&
+			     (isset($_POST["ifDimSpec"]) && !empty($_POST["ifDimSpec"])) &&
+			     (isset($_POST["dimSpec"]) && !empty($_POST["dimSpec"]))
+			    );
 		
 		if ((isset($_POST["tailor"]) && !empty($_POST["tailor"])) &&
 			(isset($_POST["status"]) && !empty($_POST["status"])) &&
