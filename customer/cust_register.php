@@ -64,7 +64,7 @@ Description: Register and login page for the smart clothing store
 
                 echo "<script>alert('Registration successful! You can now log in.');</script>";
                 // Redirect to the login page after successful registration
-                header("Refresh: 5; URL=$BASE_URL/customer/cust_login.php");
+                header("Refresh: 2; URL=$BASE_URL/customer/cust_login.php");
                 exit;
             }
         } else {
