@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Tailors (
 );
 
 -- Availability table links tailor to available time slots
-CREATE TABLE IF NOT EXISTS Availability (
+CREATE TABLE IF NOT EXISTS Tailor_Availability (
     availability_id INT AUTO_INCREMENT PRIMARY KEY,
     tailor_id INT NOT NULL,
     date DATE NOT NULL,
