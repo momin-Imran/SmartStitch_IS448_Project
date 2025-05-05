@@ -65,7 +65,7 @@
 
 		<h2> Communication Form </h2>
 
-		<form action="communication.php" method="POST">
+		<form action="<?php echo $BASE_URL; ?>/communication.php" method="POST">
 
 			<label>
 				Enter your tailor's name :
