@@ -40,7 +40,7 @@ if (!$db) {
 <head>
     <meta charset="UTF-8">
     <title>Tailor Availability Update</title>
-    <link rel="stylesheet" href="<?php echo $BASE_URL; ?>/styles2.css"> <!-- Link to external stylesheet -->
+    <link rel="stylesheet" href="<?php echo $BASE_URL; ?>/usecase3/styles2.css"> <!-- Link to external stylesheet -->
 </head>
 
 <body>

@@ -29,14 +29,14 @@ $days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 $slots = ['9am', '12pm', '3pm'];
 
 // Delete existing availability for this tailor
-$deleteQuery = "DELETE FROM tailor_availability WHERE tailor_id = ?";
+$deleteQuery = "DELETE FROM Tailor_Availability WHERE tailor_id = ?";
 $deleteStmt = $db->prepare($deleteQuery);
 $deleteStmt->bind_param("i", $tailor_id);
 $deleteStmt->execute();
 $deleteStmt->close();
 
 // Prepare insert query
-$insertQuery = "INSERT INTO tailor_availability (tailor_id, day, time_slot) VALUES (?, ?, ?)";
+$insertQuery = "INSERT INTO Tailor_Availability (tailor_id, date, time_slot) VALUES (?, ?, ?)";
 $insertStmt = $db->prepare($insertQuery);
 
 // Loop through all possible day-slot combos
