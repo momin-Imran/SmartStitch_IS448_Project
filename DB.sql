@@ -13,6 +13,14 @@
 CREATE DATABASE IF NOT EXISTS SmartClothingStore;
 USE SmartClothingStore;
 
+-- Users table (Create this table first before using it in other tables)
+CREATE TABLE IF NOT EXISTS Users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
 -- Tailors table links to Users
 CREATE TABLE IF NOT EXISTS Tailors (
     tailor_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -41,7 +49,7 @@ INSERT INTO Tailors (user_id) VALUES
 ((SELECT user_id FROM Users WHERE email = 'tailor@example.com'));
 
 -- Insert sample availability for tailor_id = 1 (John Doe)
-INSERT INTO Availability (tailor_id, date, time_slot) VALUES
+INSERT INTO Tailor_Availability (tailor_id, date, time_slot) VALUES
 (1, '2025-04-14', '9AM-11AM'),
 (1, '2025-04-15', '12PM-2PM'),
 (1, '2025-04-16', '3PM-5PM');
