@@ -29,7 +29,6 @@ if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo '<pre>POST payload → ', htmlentities(print_r($_POST, true)), '</pre>';
     if (
         isset($_POST['email']) && !empty($_POST['email'])
     ) {
@@ -39,9 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $queryUser = "SELECT user_id FROM Users WHERE email = '$email' ";
         $ResUser = mysqli_query($db, $queryUser);
 
-        echo '<pre> Found users: '
-            . mysqli_num_rows($ResUser)
-            . "\nFull SQL: $queryUser</pre>";
 
         if (! $ResUser || mysqli_num_rows($ResUser) !== 1) {
             echo "<script>alert('No user found with that email.');</script>";
