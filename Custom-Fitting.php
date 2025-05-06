@@ -99,8 +99,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // success
-        echo "<script>alert('Measurements saved successfully!');</script>";
-        exit;
+               echo "<script>
+        alert('Measurements saved successfully!');
+        window.location.href = 'testingproject.php';
+    </script>";
+    exit;
     }
 }
 
