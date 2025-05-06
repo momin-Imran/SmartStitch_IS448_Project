@@ -24,7 +24,28 @@ if (!$db) {
     die("Database connection failed: " . mysqli_connect_error());
 }
 
-// Define days and time slots
+// Map weekday name (mon, tue...) to actual date for this week
+function getDateForDayThisWeek($dayAbbr) {
+    $dayMap = [
+        'sun' => 0,
+        'mon' => 1,
+        'tue' => 2,
+        'wed' => 3,
+        'thu' => 4,
+        'fri' => 5,
+        'sat' => 6
+    ];
+
+    $today = date('w'); // 0 (Sun) to 6 (Sat)
+    $target = $dayMap[$dayAbbr];
+
+    // Go back to Monday
+    $mondayTimestamp = strtotime("last Sunday") + (60 * 60 * 24); // always get this week's Monday
+    $targetTimestamp = $mondayTimestamp + 86400 * ($target - 1); // offset from Monday
+
+    return date('Y-m-d', $targetTimestamp);
+}
+
 $days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 $slots = ['9am', '12pm', '3pm'];
 
@@ -39,13 +60,14 @@ $deleteStmt->close();
 $insertQuery = "INSERT INTO Tailor_Availability (tailor_id, date, time_slot) VALUES (?, ?, ?)";
 $insertStmt = $db->prepare($insertQuery);
 
-// Loop through all possible day-slot combos
+// Loop through form inputs and insert availability
 foreach ($days as $day) {
+    $dateValue = getDateForDayThisWeek($day);
+
     foreach ($slots as $slot) {
         $inputName = "{$day}_{$slot}";
-
         if (isset($_POST[$inputName])) {
-            $insertStmt->bind_param("iss", $tailor_id, $day, $slot);
+            $insertStmt->bind_param("iss", $tailor_id, $dateValue, $slot);
             $insertStmt->execute();
         }
     }
@@ -54,7 +76,6 @@ foreach ($days as $day) {
 $insertStmt->close();
 $db->close();
 
-// Redirect to the availability page with a success message
 header("Location: tailor-availability.php?status=success");
 exit();
 ?>
