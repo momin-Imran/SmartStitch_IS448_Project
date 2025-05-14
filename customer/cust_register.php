@@ -52,10 +52,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Get the inserted user_id
             $user_id = mysqli_insert_id($db);
 
+
+            //Edit by Yug to allow for automatic creation of sizes, to allow later updates
             // Insert into Customer table
             $cust_query = "INSERT INTO Customer (user_id) VALUES ('$user_id')";
             $cust_result = mysqli_query($db, $cust_query);
+            $Customer_ID = mysqli_insert_id($db);
 
+            
+            $querySizePref = "INSERT INTO SizePrefs(customer_id, chest, waist, neck, shoulder, arm, inseam, hips, rise, specInst) VALUES($Customer_ID, null, null, null, null, null, null, null, null, null)";
+            $sizePrefResult = mysqli_query($db, $querySizePref);
+
+
+            
+            
             if (!$cust_result) {
                 $error = mysqli_error($db);
                 echo "<script>alert('Registration failed: $error')</script>";
