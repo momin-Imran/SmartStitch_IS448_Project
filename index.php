@@ -4,216 +4,97 @@ Description: This is the entry-point to our web app. Generates a basic homepage,
 -->
 
 <?php
-include_once('config.php');
 
 session_start();
-
-// 1) Require login
-if (!isset($_SESSION['customer_id'])) {
-  header("Location: $BASE_URL/customer/cust_login.php");
-  exit();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: customer/cust_login.php");
+    exit();
 }
 
-// 2) Greet user
-echo "<p>Welcome, "
-  . htmlspecialchars($_SESSION['first_name'])
-  . " "
-  . htmlspecialchars($_SESSION['last_name'])
-  . "!</p>";
-echo "<p>Your email: " . htmlspecialchars($_SESSION['email']) . "</p>";
+// Database connection
+$mysqli = mysqli_connect("studentdb-maria.gl.umbc.edu", "eubini1", "eubini1", "eubini1");
+if (mysqli_connect_errno()) {
+    die("Failed to connect: " . mysqli_connect_error());
+}
+
+
+include "navbar.php";
+
+// Get all products
+$products = [];
+$result = mysqli_query($mysqli, "SELECT * FROM Products");
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $products[] = $row;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Smart Stitch</title>
-  <!-- Relative link to your CSS -->
-  <link rel="stylesheet" href="<?php echo $BASE_URL; ?>/styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src=" https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
 </head>
-
 <body>
-
-  <!-- Navbar -->
-  <header id="navbar"></header>
-  <script>
-    fetch('<?php echo $BASE_URL; ?>/navbar.php')
-      .then(r => r.text())
-      .then(html => document.getElementById('navbar').innerHTML = html);
-  </script>
-
   <h2>Welcome to Smart Stitch!</h2>
   <p>Shop for your favorite clothes and book an appointment with a tailor for the perfect fit.</p>
-
   <h3>Shop Our Collection</h3>
+
+  <!-- AJAX implementation to search live -->
+  <input type="text" id="searchBox" placeholder="Search available products..." onkeyup="liveSearch()" autocomplete="off" />
+  <div>
+  <b><p>Our sugestions:</p><b>
+  <div id="suggestions"></div>
+</div>
+<br>
+<br>
+
   <div class="product-container">
-
-    <!-- Product 1 -->
-    <div class="product">
-      <img src="assets/cotton_shirts.jpg" alt="Stylish Cotton Shirt" width="150">
-      <h4>Stylish Cotton Shirt</h4>
-      <p>$29.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="1">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <!-- Product 2 -->
-    <div class="product">
-      <img src="assets/denim.jpg" alt="Classic Denim Jeans" width="150">
-      <h4>Classic Denim Jeans</h4>
-      <p>$49.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="2">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <!-- Product 3 -->
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-    <div class="product">
-      <img src="assets/dress.jpg" alt="Elegant Evening Dress" width="150">
-      <h4>Elegant Evening Dress</h4>
-      <p>$79.99</p>
-      <form method="POST" action="add_to_cart.php">
-        <input type="hidden" name="product_id" value="3">
-        <button type="submit">Add to Cart</button>
-      </form>
-    </div>
-
-
+    <?php foreach ($products as $p): ?>
+      <div class="product">
+        <img src="<?= htmlspecialchars($p['image']) ?>" alt="<?= htmlspecialchars($p['name']) ?>" width="150">
+        <h4><?= htmlspecialchars($p['name']) ?></h4>
+        <p>$<?= number_format($p['price'],2) ?></p>
+        <form method="POST" action="add_to_cart.php">
+          <input type="hidden" name="product_id" value="<?= $p['product_id'] ?>">
+          <button type="submit">Add to Cart</button>
+        </form>
+      </div>
+    <?php endforeach; ?>
   </div>
+  <?php include "footer.html"; ?>
 
-  <!-- Footer -->
-  <footer id="footer"></footer>
+<!-- AJAX and JS validation to make sure we can search for prods live -->
   <script>
-    fetch('footer.html')
-      .then(r => r.text())
-      .then(html => document.getElementById('footer').innerHTML = html);
+    function liveSearch() {
+  var query = document.getElementById('searchBox').value;
+
+  // Validaing making sureonly letters, numbers, and spaces allowed
+  var valid = /^[A-Za-z0-9 ]+$/.test(query);
+  if (query.length > 0 && !valid) {
+    alert("Please use only letters, numbers, and spaces in your search.");
+    document.getElementById('searchBox').value = "";  // we could clear the field after prompt
+    document.getElementById('suggestions').innerHTML = '';
+    return false;
+  }
+
+  if (query.length < 2) {
+    document.getElementById('suggestions').innerHTML = '';
+    return;
+  }
+
+  // make the call 
+  new Ajax.Request('search_ajax.php', {
+    method: 'get',
+    parameters: { query: query },
+    onSuccess: function(ajax) {
+      document.getElementById('suggestions').innerHTML = ajax.responseText;
+    }
+  });
+}
   </script>
 
 </body>
-
 </html>
