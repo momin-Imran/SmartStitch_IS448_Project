@@ -1,6 +1,4 @@
 <?php
-include_once('config.php');
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -9,17 +7,10 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 session_start();
 
-// Check if the customer is logged in by verifying session variables
-if (!isset($_SESSION['customer_email'])) {
-    // Redirect to login if not authenticated
-    header("Location: $BASE_URL/customer/cust_login.php");
-    exit();
-}
-
 $servername = "studentdb-maria.gl.umbc.edu";
-$username = "eubini1"; // replace with your DB username
-$password = "eubini1"; // replace with your DB password
-$database = "eubini1"; // replace with your DB name
+$username = "yugp1"; // replace with your DB username
+$password = "Qvxlpcj8!"; // replace with your DB password
+$database = "yugp1"; // replace with your DB name
 
 
 $db =  mysqli_connect($servername, $username, $password, $database);
@@ -28,19 +19,20 @@ $db =  mysqli_connect($servername, $username, $password, $database);
 if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (
+if ($_SERVER["REQUEST_METHOD"]=="POST" ){
+    if(
         isset($_POST['email']) && !empty($_POST['email'])
-    ) {
+    )
+    {
         $email = trim(htmlspecialchars($_POST['email']));
         $email = mysqli_real_escape_string($db, $email);
 
         $queryUser = "SELECT user_id FROM Users WHERE email = '$email' ";
         $ResUser = mysqli_query($db, $queryUser);
 
-
-        if (! $ResUser || mysqli_num_rows($ResUser) !== 1) {
+        if (! $ResUser || mysqli_num_rows($ResUser) !==1) {
             echo "<script>alert('No user found with that email.');</script>";
+ 
         }
 
         $user_id = mysqli_fetch_assoc($ResUser)['user_id'];
@@ -51,9 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // check for SQL errors
         if (! $resCustomer) {
-            $err = mysqli_error($db);
-            echo "<script>alert('Customer lookup failed: $err');</script>";
-            exit;
+        $err = mysqli_error($db);
+        echo "<script>alert('Customer lookup failed: $err');</script>";
+        exit;
         }
 
         // make sure exactly one row was returned
@@ -66,46 +58,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = mysqli_fetch_assoc($resCustomer);
         $Customer_ID = $row['customer_id'];
 
-        function numOrNull($val)
-        {
-            return ($val !== '')
-                ? floatval($val)
-                : 'NULL';
+        function numOrNull($val) {
+            return ($val !== '') 
+              ? floatval($val) 
+              : 'NULL';
         }
 
         // sanitize & prepare measurements (NULL if blank)
         $chest    = numOrNull($_POST['chest']   ?? '');
         $waist    = numOrNull($_POST['waist']   ?? '');
         $neck     = numOrNull($_POST['neck']    ?? '');
-        $shoulder = numOrNull($_POST['shoulder'] ?? '');
+        $shoulder = numOrNull($_POST['shoulder']?? '');
         $arm     = numOrNull($_POST['arm']     ?? '');
         $inseam   = numOrNull($_POST['inseam']  ?? '');
         $hips     = numOrNull($_POST['hips']    ?? '');
         $rise     = numOrNull($_POST['rise']    ?? '');
-
+        
         // only specInst is truly a string, so escape and quote it:
         $specInst = mysqli_real_escape_string(
-            $db,
-            trim(htmlspecialchars($_POST['special_instructions'] ?? ''))
+           $db,
+           trim(htmlspecialchars($_POST['special_instructions'] ?? ''))
         );
+        
+        
+       
+        $updateSizePref = "
+        UPDATE SizePrefs
+        SET chest          = $chest,
+        waist              = $waist,
+        neck               = $neck,
+        shoulder           = $shoulder,
+        arm                = $arm,
+        inseam             = $inseam,
+        hips               = $hips,
+        rise               = $rise,
+        specInst           = '$specInst'
+        WHERE customer_id       = $Customer_ID";
 
-
-
-        $querySizePref = "INSERT INTO SizePrefs(customer_id, chest, waist, neck, shoulder, arm, inseam, hips, rise, specInst)
-            VALUES($Customer_ID, $chest, $waist, $neck, $shoulder, $arm, $inseam, $hips, $rise, '$specInst')";
-
-        if (! mysqli_query($db, $querySizePref)) {
+        if (! mysqli_query($db, $updateSizePref)) {
             die("Insert failed: " . mysqli_error($db));
         }
 
         // success
-               echo "<script>
-        alert('Measurements saved successfully!');
-        window.location.href = 'Custom-Fitting.php';
-    </script>";
+        echo "<script>
+        window.alert('Measurements saved successfully!');
+        window.location.href = 'testingproject.php';
+        </script>";
     exit;
-    }
-}
+    
+    } 
+
+}   
 
 ?>
 
@@ -118,6 +121,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Custom Fitting Application</title>
 
     <link rel="stylesheet" href="<?php echo $BASE_URL; ?>/styles.css">
+
+    <!-- Prototype.js for Ajax.Request -->
+    <script src="https://ajax.googleapis.com/ajax/libs/prototype/1.7.3.0/prototype.js"></script>
+    <script src="custom_fitting.js"></script>
 
 </head>
 
@@ -140,17 +147,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h3>If you do not know your measurements you may leave those blank and answer what you do know.</h3>
         <form id="contact-information" method="POST" action="Custom-Fitting.php">
             <fieldset class="GuestContact">
-                <label for="first-name">First Name: </label>
-                <input type="name" name="first" max="50" required>
-
-                <label for="last-name">Last Name: </label>
-                <input type="name" name="last" maxlength="50" required>
-
+                
                 <label for="Email">Email address:</label>
                 <input type="email" name="email" maxlength="75" required>
 
-                <label for="Phone-Number">Phone Number:</label>
-                <input type="tel" name="phone" pattern="[0-9]{10,15}" required>
             </fieldset>
 
             <fieldset class="measurements-upper">
