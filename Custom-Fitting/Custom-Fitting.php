@@ -1,4 +1,7 @@
 <?php
+
+include_once('../config.php');
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -9,7 +12,7 @@ session_start();
 
 $servername = "studentdb-maria.gl.umbc.edu";
 $username = "eubini1"; // replace with your DB username
-$password = "eubini1!"; // replace with your DB password
+$password = "eubini1"; // replace with your DB password
 $database = "eubini1"; // replace with your DB name
 
 

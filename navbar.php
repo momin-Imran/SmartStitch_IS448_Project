@@ -26,14 +26,14 @@ session_start();
             <li><a href="<?php echo $BASE_URL; ?>/customer/cust_login.php">Login</a></li>
 
             <?php if (isset($_SESSION['user_id'])): ?>
-                
+
                 <?php if (isset($_SESSION['tailor_id'])): ?>
                     <li><a href="<?php echo $BASE_URL; ?>/usecase3/tailor-availability.php">Tailor Availability</a></li>
                 <?php endif; ?>
 
                 <?php if (isset($_SESSION['customer_id'])): ?>
                     <li><a href="<?php echo $BASE_URL; ?>/index.php">Home</a></li>
-                    <li><a href="<?php echo $BASE_URL; ?>/Custom-Fitting.php">Custom Fitting</a></li>
+                    <li><a href="<?php echo $BASE_URL; ?>/Custom-Fitting/Custom-Fitting.php">Custom Fitting</a></li>
                     <li><a href="<?php echo $BASE_URL; ?>/User-Tailor-Communication.php">Contact Tailor</a></li>
                     <li><a href="<?php echo $BASE_URL; ?>/usecase3/bookingAppointment.php">Book Appointment</a></li>
                 <?php endif; ?>
