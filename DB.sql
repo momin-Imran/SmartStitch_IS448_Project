@@ -38,6 +38,15 @@ CREATE TABLE IF NOT EXISTS Tailor_Availability (
     FOREIGN KEY (tailor_id) REFERENCES Tailors(tailor_id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS appointments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT NOT NULL,
+    tailor_id INT NOT NULL,
+    day VARCHAR(10),
+    time_slot VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,   
+);
+
 -- Insert sample users with actual hashed passwords (generated using PHP's password_hash function)
 INSERT INTO Users (name, email, password) VALUES
 ('John Doe', 'john@example.com', '$2y$10$Wz3Eydnx64EpL3eWP/j1pOmVOj3iSZclHctoxe5Fcx1XjIJFmZ7wC'), -- password: password123

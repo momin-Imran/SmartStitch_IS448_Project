@@ -63,13 +63,50 @@ Description: Register and login page for the smart clothing store
                     $_SESSION['role'] = $row['role'];
 
                     if ($row['role'] == 'tailor') {
-                        $_SESSION['tailor_id'] = $row['user_id'];
-                        $_SESSION['tailor_email'] = $row['email'];
+                        $user_id = $row['user_id'];
+                        $tailor_id_query = "SELECT tailor_id FROM Tailors WHERE user_id = '$user_id'";
+                        $result = mysqli_query($db, $tailor_id_query);
+
+                        #if result object is not returned, then print an error and exit the PHP program
+                        if (! $result) {
+                            $error = mysqli_error($db);
+                            print "<p>$error</p>";
+                            exit;
+                        }
+
+                        if (mysqli_num_rows($result) == 1) {
+                            $tailor_row = mysqli_fetch_assoc($result);
+                            $_SESSION['tailor_id'] = $tailor_row['tailor_id'];
+                            $_SESSION['tailor_email'] = $row['email'];
+                        } else {
+                            // No tailor record found for this user_id
+                            echo "<p>Error: Tailor record not found for this user.</p>";
+                            exit;
+                        }
+
                         // Login successful, redirect to homepage
                         header("Location: $BASE_URL/usecase3/tailor-availability.php");
                     } else if ($row['role'] == 'customer') {
-                        $_SESSION['customer_id'] = $row['user_id'];
-                        $_SESSION['customer_email'] = $row['email'];
+                        $user_id = $row['user_id'];
+                        $customer_id_query = "SELECT customer_id FROM Customer WHERE user_id = '$user_id'";
+                        $customer_result = mysqli_query($db, $customer_id_query);
+
+                        #if result object is not returned, then print an error and exit the PHP program
+                        if (! $customer_result) {
+                            $error = mysqli_error($db);
+                            print "<p>$error</p>";
+                            exit;
+                        }
+
+                        if (mysqli_num_rows($customer_result) == 1) {
+                            $customer_row = mysqli_fetch_assoc($customer_result);
+                            $_SESSION['customer_id'] = $customer_row['customer_id'];
+                            $_SESSION['customer_email'] = $row['email'];
+                        } else {
+                            // No tailor record found for this user_id
+                            echo "<p>Error: Customer record not found for this user.</p>";
+                            exit;
+                        }
                         // Login successful, redirect to homepage
                         header("Location: $BASE_URL/index.php");
                     }

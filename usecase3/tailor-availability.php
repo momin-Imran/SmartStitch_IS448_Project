@@ -14,16 +14,16 @@ include_once('../config.php');
 
 session_start(); // Start or resume the session
 
-// Check if the tailor is logged in by verifying session variables
-if (!isset($_SESSION['tailor_email'])) {
+// Check if the tailor or customer is logged in by verifying session variables
+if (!isset($_SESSION['tailor_email']) && !isset($_SESSION['customer_email'])) {
     // Redirect to login if not authenticated
     header("Location: $BASE_URL/customer/cust_login.php");
     exit();
 }
 
-// Store session values for use in this page
-$tailor_email = $_SESSION['tailor_email'];
-$tailor_id = $_SESSION['tailor_id'];
+// Determine user role
+$isTailor = isset($_SESSION['tailor_email']);
+$tailor_id = $isTailor ? $_SESSION['tailor_id'] : null;
 
 // Connect to the MySQL database using given credentials
 $db = mysqli_connect("studentdb-maria.gl.umbc.edu", "eubini1", "eubini1", "eubini1");
@@ -40,7 +40,7 @@ if (!$db) {
 <head>
     <meta charset="UTF-8">
     <title>Tailor Availability Update</title>
-    <link rel="stylesheet" href="<?php echo $BASE_URL; ?>/usecase3/styles2.css"> <!-- Link to external stylesheet -->
+    <link rel="stylesheet" href="<?php echo $BASE_URL; ?>/styles.css"> <!-- Link to external stylesheet -->
 </head>
 
 <body>
@@ -54,12 +54,12 @@ if (!$db) {
     </script>
 
     <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
-            <p>Your availability has been successfully updated!</p>
-        <?php endif; ?>
+        <p>Your availability has been successfully updated!</p>
+    <?php endif; ?>
 
-    <h2>Update Availability</h2>
+    <h2><?php echo $isTailor ? "Update Availability" : "Tailor Availability"; ?></h2>
 
-    <!-- Form to collect availability data from tailor -->
+    <!-- Availability calendar (visible to all logged-in users) -->
     <form method="POST" action="updateAvailability.php">
         <table>
             <tr>
@@ -91,26 +91,31 @@ if (!$db) {
                 // Loop through each day to create a checkbox input
                 foreach ($days as $day) {
                     $name = "{$day}_{$suffix}"; // Example: mon_9am
-                    // Each checkbox will send a value like name="mon_9am" if checked
-                    echo "<td><input type='checkbox' name='{$name}'></td>";
+                    if ($isTailor) {
+                        // Each checkbox will send a value like name="mon_9am" if checked
+                        echo "<td><input type='checkbox' name='{$name}'></td>";
+                    } else {
+                        echo "<td><input type='checkbox' disabled></td>";
+                    }
                 }
 
                 echo "</tr>"; // End of row for that time slot
             }
             ?>
         </table>
-        <button type="submit">Update Availability</button> <!-- Submit button to send form data -->
+        <!-- Only show submit button if user is a tailor -->
+        <?php if ($isTailor): ?>
+            <button type="submit">Update Availability</button> <!-- Submit button to send form data -->
+        <?php endif; ?>
     </form>
 
-     <!-- Footer is dynamically loaded from footer.html using JavaScript -->
-     <footer id="footer"></footer>
+    <!-- Footer is dynamically loaded from footer.html using JavaScript -->
+    <footer id="footer"></footer>
     <script>
         fetch('<?php echo $BASE_URL; ?>/footer.html') // Fetch footer HTML content
             .then(response => response.text()) // Convert response to text
             .then(data => document.getElementById('footer').innerHTML = data); // Inject into page
     </script>
-    
-
 </body>
 
 </html>
