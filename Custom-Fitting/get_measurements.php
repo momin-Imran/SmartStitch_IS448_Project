@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
   exit;
 }
 $user_id = (int)$_SESSION['user_id'];
-$db = mysqli_connect('studentdb-maria.gl.umbc.edu','yugp1','Qvxlpcj8!','yugp1');
+$db = mysqli_connect('studentdb-maria.gl.umbc.edu','eubini1','eubini1!','eubini1');
 
 $sql = "
   SELECT u.email,
