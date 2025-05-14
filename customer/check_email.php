@@ -1,3 +1,9 @@
+<!-- 
+Author: Adams Ubini
+Description: Checks if a given email exists in the Users table.
+             Returns a JSON response indicating existence or error.
+-->
+
 <?php
 include_once('../config.php');
 
@@ -33,7 +39,6 @@ if (isset($_POST['email'])) {
     echo json_encode([
         "exists" => $emailExists
     ]);
-
 } else {
     echo json_encode([
         "status"    => "error",
