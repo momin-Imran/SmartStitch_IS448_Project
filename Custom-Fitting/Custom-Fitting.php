@@ -8,9 +8,9 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 session_start();
 
 $servername = "studentdb-maria.gl.umbc.edu";
-$username = "yugp1"; // replace with your DB username
-$password = "Qvxlpcj8!"; // replace with your DB password
-$database = "yugp1"; // replace with your DB name
+$username = "eubini1"; // replace with your DB username
+$password = "eubini1!"; // replace with your DB password
+$database = "eubini1"; // replace with your DB name
 
 
 $db =  mysqli_connect($servername, $username, $password, $database);
