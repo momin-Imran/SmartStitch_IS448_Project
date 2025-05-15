@@ -9,7 +9,7 @@ include_once('config.php');
 
 session_start();
 if (!isset($_SESSION['user_id'])) {
-  header("Location: customer/cust_login.php");
+  header("Location: $BASE_URL/customer/cust_login.php");
   exit();
 }
 
