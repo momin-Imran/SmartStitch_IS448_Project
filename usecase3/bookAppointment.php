@@ -1,9 +1,16 @@
 <?php
+// Author: Nathan Rakhamimov
+// ==============================
+// bookAppointment.php
+// Allows a logged-in customer to book an appointment with a tailor.
+// Checks for existing bookings, inserts new appointment if valid.
+// ==============================
+
 session_start();
 
-// Redirect if customer not logged in
+// Redirect if customer is not logged in
 if (!isset($_SESSION['customer_id'])) {
-    header("Location: $BASE_URL/customer/cust_login.php");
+    header("Location: cust_login.php");
     exit();
 }
 
@@ -11,23 +18,26 @@ include_once('../config.php');
 
 $customer_id = $_SESSION['customer_id'];
 
-// Connect to DB
+// Connect to database
 $db = mysqli_connect("studentdb-maria.gl.umbc.edu", "eubini1", "eubini1", "eubini1");
 if (!$db) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Handle form submit
 $message = "";
+
+// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tailor_id = $_POST['tailor_id'];
     $appointment_day = $_POST['day'];
     $appointment_time = $_POST['time'];
 
+    // Check for empty input fields
     if (empty($tailor_id) || empty($appointment_day) || empty($appointment_time)) {
         $message = "All fields are required.";
     } else {
-        $check_sql = "SELECT * FROM appointments WHERE tailor_id = ? AND appointment_day = ? AND appointment_time = ?";
+        // Check if the appointment slot is already booked
+        $check_sql = "SELECT * FROM appointments WHERE tailor_id = ? AND day = ? AND time_slot = ?";
         $stmt = mysqli_prepare($db, $check_sql);
         mysqli_stmt_bind_param($stmt, "iss", $tailor_id, $appointment_day, $appointment_time);
         mysqli_stmt_execute($stmt);
@@ -36,18 +46,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (mysqli_num_rows($result) > 0) {
             $message = "This time slot is already booked.";
         } else {
-            $insert_sql = "INSERT INTO appointments (customer_id, tailor_id, appointment_day, appointment_time)
+            // Insert new appointment into the database
+            $insert_sql = "INSERT INTO appointments (customer_id, tailor_id, day, time_slot)
                            VALUES (?, ?, ?, ?)";
             $insert_stmt = mysqli_prepare($db, $insert_sql);
             mysqli_stmt_bind_param($insert_stmt, "iiss", $customer_id, $tailor_id, $appointment_day, $appointment_time);
 
-         if (mysqli_stmt_execute($insert_stmt)) {
-            // Redirect to confirmation page
-            header("Location: appointmentConfirmed.php");
-            exit();
-        } else {
-            $message = "Booking failed: " . mysqli_error($db);
-        }
+            if (mysqli_stmt_execute($insert_stmt)) {
+                // Redirect to confirmation page
+                header("Location: appointmentConfirmed.php");
+                exit();
+            } else {
+                $message = "Booking failed: " . mysqli_error($db);
+            }
 
             mysqli_stmt_close($insert_stmt);
         }
@@ -55,6 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
+// Close DB connection
 mysqli_close($db);
 ?>
 
@@ -63,21 +75,24 @@ mysqli_close($db);
 <head>
     <meta charset="UTF-8">
     <title>Book an Appointment</title>
-    <link rel="stylesheet" href="<?php echo $BASE_URL; ?>/usecase3/styles2.css">
+    <link rel="stylesheet" href="/usecase3/styles2.css">
 </head>
 <body>
 
+<!-- Load dynamic navbar -->
 <header id="navbar"></header>
 <script>
-    fetch('<?php echo $BASE_URL; ?>/navbar.php')
+    fetch('/navbar.php')
         .then(response => response.text())
         .then(data => document.getElementById('navbar').innerHTML = data);
 </script>
 
 <h2>Book an Appointment</h2>
 
+<!-- Display message if any -->
 <?php if (!empty($message)) echo "<p>$message</p>"; ?>
 
+<!-- Appointment booking form -->
 <form method="POST" action="">
     <label for="tailor_id">Select Tailor:</label>
     <select name="tailor_id" id="tailor_id" required>
@@ -110,11 +125,32 @@ mysqli_close($db);
     <button type="submit">Book Appointment</button>
 </form>
 
+<!-- Load dynamic footer -->
 <footer id="footer"></footer>
 <script>
-    fetch('<?php echo $BASE_URL; ?>/footer.html')
+    fetch('/footer.html')
         .then(response => response.text())
         .then(data => document.getElementById('footer').innerHTML = data);
+</script>
+
+<!-- Client-side form validation -->
+<script>
+document.querySelector("form").addEventListener("submit", function (e) {
+    const tailor = document.getElementById("tailor_id").value;
+    const day = document.getElementById("day").value;
+    const time = document.getElementById("time").value;
+
+    let errorMsg = "";
+
+    if (!tailor) errorMsg += "Please select a tailor.\n";
+    if (!day) errorMsg += "Please select a day.\n";
+    if (!time) errorMsg += "Please select a time slot.\n";
+
+    if (errorMsg !== "") {
+        e.preventDefault(); // Stop form submission
+        alert(errorMsg);    // Show error messages
+    }
+});
 </script>
 
 </body>
