@@ -10,12 +10,12 @@ $db = mysqli_connect("studentdb-maria.gl.umbc.edu", "eubini1", "eubini1", "eubin
 if (mysqli_connect_errno())    exit("Error - could not connect to MySQL");
 
 // User info
-$phone = '5467251231';
+$phone = '5467251255';
 $password = '12345678Ab';
-$last_name = 'Saint';
-$first_name = 'Sammy';
+$last_name = 'Michael';
+$first_name = 'Richie';
 $title = 'Mr';
-$email = 'w@w.com';
+$email = 'michael@gmail.com';
 
 $password = trim(htmlspecialchars($password));
 $email = trim(htmlspecialchars($email));

@@ -22,7 +22,7 @@ session_start(); // Start or resume the session
 
 // Redirect back to log-in if not authenticated as either tailor or customer
 if (!isset($_SESSION['tailor_email']) && !isset($_SESSION['customer_email'])) {
-    header("Location: /customer/cust_login.php");
+    header("Location: $BASE_URL/customer/cust_login.php");
     exit();
 }
 
