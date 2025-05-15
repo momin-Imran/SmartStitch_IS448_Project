@@ -6,15 +6,17 @@
 // Checks for existing bookings, inserts new appointment if valid.
 // ==============================
 
+include_once('../config.php');
 session_start();
+
 
 // Redirect if customer is not logged in
 if (!isset($_SESSION['customer_id'])) {
-    header("Location: cust_login.php");
+    header("Location: $BASE_URL/customer/cust_login.php");
     exit();
 }
 
-include_once('../config.php');
+
 
 $customer_id = $_SESSION['customer_id'];
 
@@ -72,86 +74,89 @@ mysqli_close($db);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Book an Appointment</title>
-    <link rel="stylesheet" href="/usecase3/styles2.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $BASE_URL; ?>/styles.css">
 </head>
+
 <body>
 
-<!-- Load dynamic navbar -->
-<header id="navbar"></header>
-<script>
-    fetch('/navbar.php')
-        .then(response => response.text())
-        .then(data => document.getElementById('navbar').innerHTML = data);
-</script>
+    <!-- Load dynamic navbar -->
+    <header id="navbar"></header>
+    <script>
+        fetch('/navbar.php')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+    </script>
 
-<h2>Book an Appointment</h2>
+    <h2>Book an Appointment</h2>
 
-<!-- Display message if any -->
-<?php if (!empty($message)) echo "<p>$message</p>"; ?>
+    <!-- Display message if any -->
+    <?php if (!empty($message)) echo "<p>$message</p>"; ?>
 
-<!-- Appointment booking form -->
-<form method="POST" action="">
-    <label for="tailor_id">Select Tailor:</label>
-    <select name="tailor_id" id="tailor_id" required>
-        <option value="">-- Choose Tailor --</option>
-        <option value="1">Tailor 1</option>
-        <option value="2">Tailor 2</option>
-        <!-- Replace with dynamic tailor list if needed -->
-    </select><br><br>
+    <!-- Appointment booking form -->
+    <form method="POST" action="">
+        <label for="tailor_id">Select Tailor:</label>
+        <select name="tailor_id" id="tailor_id" required>
+            <option value="">-- Choose Tailor --</option>
+            <option value="1">Tailor 1</option>
+            <option value="2">Tailor 2</option>
+            <!-- Replace with dynamic tailor list if needed -->
+        </select><br><br>
 
-    <label for="day">Select Day:</label>
-    <select name="day" id="day" required>
-        <option value="">-- Choose Day --</option>
-        <option value="mon">Monday</option>
-        <option value="tue">Tuesday</option>
-        <option value="wed">Wednesday</option>
-        <option value="thu">Thursday</option>
-        <option value="fri">Friday</option>
-        <option value="sat">Saturday</option>
-        <option value="sun">Sunday</option>
-    </select><br><br>
+        <label for="day">Select Day:</label>
+        <select name="day" id="day" required>
+            <option value="">-- Choose Day --</option>
+            <option value="mon">Monday</option>
+            <option value="tue">Tuesday</option>
+            <option value="wed">Wednesday</option>
+            <option value="thu">Thursday</option>
+            <option value="fri">Friday</option>
+            <option value="sat">Saturday</option>
+            <option value="sun">Sunday</option>
+        </select><br><br>
 
-    <label for="time">Select Time Slot:</label>
-    <select name="time" id="time" required>
-        <option value="">-- Choose Time --</option>
-        <option value="9AM-11AM">9AM–11AM</option>
-        <option value="12PM-2PM">12PM–2PM</option>
-        <option value="3PM-5PM">3PM–5PM</option>
-    </select><br><br>
+        <label for="time">Select Time Slot:</label>
+        <select name="time" id="time" required>
+            <option value="">-- Choose Time --</option>
+            <option value="9AM-11AM">9AM–11AM</option>
+            <option value="12PM-2PM">12PM–2PM</option>
+            <option value="3PM-5PM">3PM–5PM</option>
+        </select><br><br>
 
-    <button type="submit">Book Appointment</button>
-</form>
+        <button type="submit">Book Appointment</button>
+    </form>
 
-<!-- Load dynamic footer -->
-<footer id="footer"></footer>
-<script>
-    fetch('/footer.html')
-        .then(response => response.text())
-        .then(data => document.getElementById('footer').innerHTML = data);
-</script>
+    <!-- Load dynamic footer -->
+    <footer id="footer"></footer>
+    <script>
+        fetch('/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+    </script>
 
-<!-- Client-side form validation -->
-<script>
-document.querySelector("form").addEventListener("submit", function (e) {
-    const tailor = document.getElementById("tailor_id").value;
-    const day = document.getElementById("day").value;
-    const time = document.getElementById("time").value;
+    <!-- Client-side form validation -->
+    <script>
+        document.querySelector("form").addEventListener("submit", function(e) {
+            const tailor = document.getElementById("tailor_id").value;
+            const day = document.getElementById("day").value;
+            const time = document.getElementById("time").value;
 
-    let errorMsg = "";
+            let errorMsg = "";
 
-    if (!tailor) errorMsg += "Please select a tailor.\n";
-    if (!day) errorMsg += "Please select a day.\n";
-    if (!time) errorMsg += "Please select a time slot.\n";
+            if (!tailor) errorMsg += "Please select a tailor.\n";
+            if (!day) errorMsg += "Please select a day.\n";
+            if (!time) errorMsg += "Please select a time slot.\n";
 
-    if (errorMsg !== "") {
-        e.preventDefault(); // Stop form submission
-        alert(errorMsg);    // Show error messages
-    }
-});
-</script>
+            if (errorMsg !== "") {
+                e.preventDefault(); // Stop form submission
+                alert(errorMsg); // Show error messages
+            }
+        });
+    </script>
 
 </body>
+
 </html>
