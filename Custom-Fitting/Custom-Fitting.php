@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
         // success
         echo "<script>
         window.alert('Measurements saved successfully!');
-        window.location.href = 'Custom-Fitting.php';
+        window.location.href = '$BASE_URL/Custom-Fitting.php';
         </script>";
     exit;
     
