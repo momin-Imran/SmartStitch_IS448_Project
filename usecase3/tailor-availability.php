@@ -1,27 +1,31 @@
 <?php
-
 /**
+ * File: tailor-availability.php
+ * -----------------------------
+ * Author: Nathan Rakhamimov
  * Tailor Availability Page
  * 
- * This secure page allows a logged-in tailor to update their weekly availability.
- * It ensures the tailor is authenticated using session validation, connects to the database,
- * and presents a form with time slots and weekdays as checkboxes.
+ * This pafe allows authenticated tailors to update their weekly availability using a form with checkboxes
+ * for different time slots and days of the week. Availability data is submitted to 'updateAvailability.php'.
  * 
- * On form submission, the data is sent to updateAvailability.php for processing and storage.
+ * Features: 
+ * - Session-based authentication (tailor or customer)
+ * - Dynamic navbar and footer inclusion using JS
+ * - Conditional rendering based on user role (only tailors can update availability)
+ * - Basic availability calendar structure with predefined time slots
  */
 
 include_once('../config.php');
 
 session_start(); // Start or resume the session
 
-// Check if the tailor or customer is logged in by verifying session variables
+// Redirect back to log-in if not authenticated as either tailor or customer
 if (!isset($_SESSION['tailor_email']) && !isset($_SESSION['customer_email'])) {
-    // Redirect to login if not authenticated
-    header("Location: $BASE_URL/customer/cust_login.php");
+    header("Location: /customer/cust_login.php");
     exit();
 }
 
-// Determine user role
+// Determine user role and tailor_id
 $isTailor = isset($_SESSION['tailor_email']);
 $tailor_id = $isTailor ? $_SESSION['tailor_id'] : null;
 
@@ -40,7 +44,7 @@ if (!$db) {
 <head>
     <meta charset="UTF-8">
     <title>Tailor Availability Update</title>
-    <link rel="stylesheet" href="<?php echo $BASE_URL; ?>/styles.css"> <!-- Link to external stylesheet -->
+    <link rel="stylesheet" href="/usecase3/styles2.css"> <!-- Link to external stylesheet -->
 </head>
 
 <body>
@@ -48,14 +52,14 @@ if (!$db) {
     <!-- Navbar is dynamically loaded from navbar.php using JavaScript -->
     <header id="navbar"></header>
     <script>
-        fetch('<?php echo $BASE_URL; ?>/navbar.php') // Fetch navbar HTML from an external file
+        fetch('/navbar.php') // Fetch navbar HTML from an external file
             .then(response => response.text()) // Convert response to plain text
             .then(data => document.getElementById('navbar').innerHTML = data); // Inject into page
     </script>
 
     <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
-        <p>Your availability has been successfully updated!</p>
-    <?php endif; ?>
+            <p>Your availability has been successfully updated!</p>
+        <?php endif; ?>
 
     <h2><?php echo $isTailor ? "Update Availability" : "Tailor Availability"; ?></h2>
 
@@ -92,11 +96,11 @@ if (!$db) {
                 foreach ($days as $day) {
                     $name = "{$day}_{$suffix}"; // Example: mon_9am
                     if ($isTailor) {
-                        // Each checkbox will send a value like name="mon_9am" if checked
-                        echo "<td><input type='checkbox' name='{$name}'></td>";
-                    } else {
-                        echo "<td><input type='checkbox' disabled></td>";
-                    }
+                    // Each checkbox will send a value like name="mon_9am" if checked
+                    echo "<td><input type='checkbox' name='{$name}'></td>";
+                } else {
+                    echo "<td><input type='checkbox' disabled></td>";
+                }
                 }
 
                 echo "</tr>"; // End of row for that time slot
@@ -105,17 +109,17 @@ if (!$db) {
         </table>
         <!-- Only show submit button if user is a tailor -->
         <?php if ($isTailor): ?>
-            <button type="submit">Update Availability</button> <!-- Submit button to send form data -->
+        <button type="submit">Update Availability</button> <!-- Submit button to send form data -->
         <?php endif; ?>
     </form>
 
-    <!-- Footer is dynamically loaded from footer.html using JavaScript -->
-    <footer id="footer"></footer>
+     <!-- Footer is dynamically loaded from footer.html using JavaScript -->
+     <footer id="footer"></footer>
     <script>
-        fetch('<?php echo $BASE_URL; ?>/footer.html') // Fetch footer HTML content
+        fetch('/footer.html') // Fetch footer HTML content
             .then(response => response.text()) // Convert response to text
             .then(data => document.getElementById('footer').innerHTML = data); // Inject into page
     </script>
+    <script src="/usecase3/availability.js"></script>
 </body>
-
 </html>
