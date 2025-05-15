@@ -9,26 +9,42 @@ function init(){
   // 1) Hook your existing validation
   form.addEventListener("submit", validateForm);
 
-  // 2) Bolt on Prototype AJAX to fetch saved data
-  new Ajax.Request('get_measurements.php', {
-    method: 'get',
-    onSuccess: function(response) {
-      var data;
-      //error catch block for parsing
-      try {
-        data = response.responseText.evalJSON();
-      } catch(e) {
-        console.error('Could not parse JSON from get_measurements.php:', e);
-        return;
-      }
-      // autofill each field if it exists
-      Object.keys(data).forEach(function(key){
-        var fld = form.elements[key];
-        if (fld != null) fld.value = data[key];
+  // Attach AJAX lookup on email blur
+  var emailField = document.getElementById('email');
+  if (emailField) {
+    emailField.addEventListener('blur', function() {
+      var email = this.value.trim();
+      if (!email) return;
+
+      new Ajax.Request('get_measurements.php', {
+        method: 'post',
+        parameters: { email: email },
+        onSuccess: function(response) {
+          var data;
+          try {
+            data = response.responseText.evalJSON();
+          } catch (e) {
+            console.error('Invalid JSON from get_by_email.php:', e);
+            return;
+          }
+          autofillMeasurements(data, form);
+        },
+        onFailure: function() {
+          console.warn('Email lookup failed.');
+        }
       });
-    },
-    onFailure: function() {
-      console.warn('Failed to fetch measurements (not logged in or server error).');
+    });
+  }
+  
+}
+
+
+// Fill measurement fields from AJAX response
+function autofillMeasurements(data, form) {
+  ['chest', 'waist', 'neck', 'shoulder', 'arm', 'inseam', 'hips', 'rise', 'special_instructions'].forEach(function(key) {
+    var fld = form.elements[key];
+    if (fld && data[key] != null) {
+      fld.value = data[key];
     }
   });
 }
