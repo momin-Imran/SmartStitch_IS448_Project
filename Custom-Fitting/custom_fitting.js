@@ -71,7 +71,7 @@ function validateForm(event) {
 
 
     // Numeric measurements > 0
-    ["chest", "waist", "hips", "rise"].forEach(id => {
+    ['chest', 'waist', 'neck', 'shoulder', 'arm', 'inseam', 'hips', 'rise', 'special_instructions'].forEach(id => {
         const val = form.elements[id].value.trim();
         if (val) {
             const num = parseFloat(val);
