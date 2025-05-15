@@ -152,8 +152,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" ){
             <fieldset class="GuestContact">
                 
                 <label for="Email">Email address:</label>
-                <input type="email" name="email" maxlength="75" required>
-
+                <input type="email" name="email" id="email" onBlur="loadByEmail(this.value)" maxlength="75" required>
             </fieldset>
 
             <fieldset class="measurements-upper">
