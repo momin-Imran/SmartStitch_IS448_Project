@@ -14,6 +14,7 @@ function init(){
     method: 'get',
     onSuccess: function(response) {
       var data;
+      //error catch block for parsing
       try {
         data = response.responseText.evalJSON();
       } catch(e) {
