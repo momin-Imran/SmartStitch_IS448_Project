@@ -1,4 +1,5 @@
 <?php
+
 /**
  * File: tailor-availability.php
  * -----------------------------
@@ -44,7 +45,7 @@ if (!$db) {
 <head>
     <meta charset="UTF-8">
     <title>Tailor Availability Update</title>
-    <link rel="stylesheet" href="/usecase3/styles2.css"> <!-- Link to external stylesheet -->
+    <link rel="stylesheet" type="text/css" href="<?php echo $BASE_URL; ?>/styles.css">
 </head>
 
 <body>
@@ -52,14 +53,14 @@ if (!$db) {
     <!-- Navbar is dynamically loaded from navbar.php using JavaScript -->
     <header id="navbar"></header>
     <script>
-        fetch('/navbar.php') // Fetch navbar HTML from an external file
+        fetch('<?php echo $BASE_URL; ?>/navbar.php') // Fetch navbar HTML from an external file
             .then(response => response.text()) // Convert response to plain text
             .then(data => document.getElementById('navbar').innerHTML = data); // Inject into page
     </script>
 
     <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
-            <p>Your availability has been successfully updated!</p>
-        <?php endif; ?>
+        <p>Your availability has been successfully updated!</p>
+    <?php endif; ?>
 
     <h2><?php echo $isTailor ? "Update Availability" : "Tailor Availability"; ?></h2>
 
@@ -96,11 +97,11 @@ if (!$db) {
                 foreach ($days as $day) {
                     $name = "{$day}_{$suffix}"; // Example: mon_9am
                     if ($isTailor) {
-                    // Each checkbox will send a value like name="mon_9am" if checked
-                    echo "<td><input type='checkbox' name='{$name}'></td>";
-                } else {
-                    echo "<td><input type='checkbox' disabled></td>";
-                }
+                        // Each checkbox will send a value like name="mon_9am" if checked
+                        echo "<td><input type='checkbox' name='{$name}'></td>";
+                    } else {
+                        echo "<td><input type='checkbox' disabled></td>";
+                    }
                 }
 
                 echo "</tr>"; // End of row for that time slot
@@ -109,17 +110,18 @@ if (!$db) {
         </table>
         <!-- Only show submit button if user is a tailor -->
         <?php if ($isTailor): ?>
-        <button type="submit">Update Availability</button> <!-- Submit button to send form data -->
+            <button type="submit">Update Availability</button> <!-- Submit button to send form data -->
         <?php endif; ?>
     </form>
 
-     <!-- Footer is dynamically loaded from footer.html using JavaScript -->
-     <footer id="footer"></footer>
+    <!-- Footer is dynamically loaded from footer.html using JavaScript -->
+    <footer id="footer"></footer>
     <script>
-        fetch('/footer.html') // Fetch footer HTML content
+        fetch('<?php echo $BASE_URL; ?>/footer.html') // Fetch footer HTML content
             .then(response => response.text()) // Convert response to text
             .then(data => document.getElementById('footer').innerHTML = data); // Inject into page
     </script>
-    <script src="/usecase3/availability.js"></script>
+    <script src="<?php echo $BASE_URL; ?>/usecase3/availability.js"></script>
 </body>
+
 </html>
