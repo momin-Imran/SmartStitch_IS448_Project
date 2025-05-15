@@ -4,7 +4,10 @@ Description: Displays the number of products within the cart and then allows the
 
 
 <?php
-session_start();
+
+  include_once('config.php');
+
+  session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: customer/cust_login.php");
     exit();
@@ -62,6 +65,6 @@ if ($cart) {
     </form>
     <p><a href="index.php">Continue Shopping</a></p>
   <?php endif; ?>
-  <?php include "footer.php"; ?>
+  <?php include "<?php echo $BASE_URL; ?>/footer.php"; ?>
 </body>
 </html>
