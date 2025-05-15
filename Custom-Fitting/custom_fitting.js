@@ -16,7 +16,7 @@ function init(){
       var email = this.value.trim();
       if (!email) return;
 
-      new Ajax.Request('get_measurements.php', {
+      new Ajax.Request(BASE_URL +'/Custom-Fitting/get_measurements.php', {
         method: 'post',
         parameters: { email: email },
         onSuccess: function(response) {
