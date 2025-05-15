@@ -86,7 +86,7 @@ mysqli_close($db);
     <!-- Load dynamic navbar -->
     <header id="navbar"></header>
     <script>
-        fetch('/navbar.php')
+        fetch('<?php echo $BASE_URL; ?>/navbar.php')
             .then(response => response.text())
             .then(data => document.getElementById('navbar').innerHTML = data);
     </script>
@@ -132,7 +132,7 @@ mysqli_close($db);
     <!-- Load dynamic footer -->
     <footer id="footer"></footer>
     <script>
-        fetch('/footer.html')
+        fetch('<?php echo $BASE_URL; ?>/footer.html')
             .then(response => response.text())
             .then(data => document.getElementById('footer').innerHTML = data);
     </script>
