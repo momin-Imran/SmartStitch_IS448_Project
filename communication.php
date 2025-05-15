@@ -37,17 +37,46 @@
 		
 		$allergenSet = ((isset($_POST["ifAllerg"]) && !empty($_POST["ifAllerg"])) &&
 		                (isset($_POST["allergens"]) && !empty($_POST["allergens"])) &&
-			        (isset($_POST["severity"]) && !empty($_POST["severity"]))
-			       );
+			            (isset($_POST["severity"]) && !empty($_POST["severity"]))
+			           );
+
+		/*echo("ifAllerg set : ");
+		echo(isset($_POST["ifAllerg"]));
+		echo("<br />");
+		echo("allergens set : ");
+		echo(isset($_POST["allergens"]));
+		echo("<br />");
+		echo("severity set : ");
+		echo(isset($_POST["severity"]));
+		echo("<br />");*/
 						  
 		$sizeSet =  ((isset($_POST["ifResize"]) && !empty($_POST["ifResize"])) &&
 		             (isset($_POST["dimen"]) && !empty($_POST["dimen"])) &&
-			     (isset($_POST["otherDim"]) && !empty($_POST["otherDim"])) &&
-			     (isset($_POST["resize"]) && !empty($_POST["resize"])) &&
-			     (isset($_POST["ifDimSpec"]) && !empty($_POST["ifDimSpec"])) &&
-			     (isset($_POST["dimSpec"]) && !empty($_POST["dimSpec"]))
-			    );
-		
+			         (isset($_POST["otherDim"]) && !empty($_POST["otherDim"])) &&
+			         (isset($_POST["resize"]) && !empty($_POST["resize"])) &&
+			         (isset($_POST["ifDimSpec"]) && !empty($_POST["ifDimSpec"])) &&
+			         (isset($_POST["dimSpec"]) && !empty($_POST["dimSpec"]))
+			        );
+
+		/*echo("ifResize set : ");
+		echo(isset($_POST["ifResize"]));
+		echo("<br />");
+		echo("dimen set : ");
+		echo(isset($_POST["dimen"]));
+		echo("<br />");
+		echo("otherDim set : ");
+		echo(isset($_POST["otherDim"]));
+		echo("<br />");
+		echo("resize set : ");
+		echo(isset($_POST["resize"]));
+		echo("<br />");
+		echo("ifDimSpec set : ");
+		echo(isset($_POST["ifDimSpec"]));
+		echo("<br />");
+		echo("dimSpec set : ");
+		echo(isset($_POST["dimSpec"]));
+		echo("<br />");*/
+
 		if ((isset($_POST["tailor"]) && !empty($_POST["tailor"])) &&
 			(isset($_POST["status"]) && !empty($_POST["status"])) &&
 			(isset($_POST["undel"]) && !empty ($_POST["undel"])) &&
@@ -61,7 +90,7 @@
 				
 				$ifAllerg = $_POST["ifAllerg"];
 				$allergens = mysqli_real_escape_string($db, $_POST["allergens"]);
-				$severty = $_POST["severty"];
+				$severity = $_POST["severity"];
 				
 				$ifResize = $_POST["ifResize"];
 				$dimen = $_POST["dimen"];
@@ -71,13 +100,13 @@
 				$dimSpec = mysqli_real_escape_string($db, $_POST["dimSpec"]);
 				
 				$concerns = mysqli_real_escape_string($db, $_POST["concerns"]);
-				$other = mysqli_real_escape_string($db, $_POST["other"]);
+				//$other = mysqli_real_escape_string($db, $_POST["other"]);*/
 				
 				$orderStatus = $_POST["status"];
 				$deliveryStatus = $_POST["undel"];
 				
 				$appendAllergens = "INSERT INTO Allergens(customer_id, allergen, severity) VALUES ('$cID' , '$allergens' , '$severt')";
-				
+
 				if ($dimen == "chest") {
 					
 					$appendSize = "INSERT INTO SizePrefs(customer_id, chest) VALUES ('$cID' , '$resize')";
@@ -151,10 +180,18 @@
 				}
 
 				$messageDate = date("d/m/Y");
-				$appendConcernMessage = "INSERT INTO OrderCom(com_date, concern) VALUES ('$messageDate' , '$concerns')";
-				$appendOtherMessage = "INSERT INTO OtherCom(com_date, concern) VALUES ('$messageDate' , '$other')";
+				$appendConcernMessage = "INSERT INTO OrderCom(/*com_date*/ concern) VALUES (/*'$messageDate'*/ '$concerns')";
+				//$appendOtherMessage = "INSERT INTO OtherCom(/*com_date*/, concern) VALUES (/*'$messageDate'*/ , '$other')";
 				
-				if ($ifAllerg) {
+				//echo ("queries defined ");
+				$appendAl;
+				if ($ifAllerg == "yes") {
+					$appendAl = true;
+				} else {
+					$appendAl = false;
+				}
+
+				if ($appendAl) {
 					$resultAllerg = mysqli_query($db, $appendAllergens);
 					if (! $resultAllerg) {
 						print("Insertion Could not be performed");
@@ -164,7 +201,15 @@
 					}
 				}
 
-				if ($ifResize) {
+				//echo ("Allergies Appended ");
+				$appendRe;
+				if ($ifResize == "yes") {
+					$appendRe = true;
+				} else {
+					$appendRe = false;
+				}
+
+				if ($appendRe) {
 					$resultSize = mysqli_query($db, $appendSize);
 					if (! $resultSize) {
 						print("Insertion Could not be performed");
@@ -172,8 +217,15 @@
 						print("<p> . $error . </p>");
 						exit;
 					}
+					
+					$appendReSp;
+					if ($ifDimSpec == "yes") {
+						$appendReSp = true;
+					} else {
+						$appendReSp = false;
+					}
 
-					if ($ifDimSpec) {
+					if ($appendReSp) {
 						$resultDimSpec = mysqli_query($db, $addSpec);
 						if (! $resultDimSpec) {
 							print("Insertion Could not be performed");
@@ -183,6 +235,8 @@
 						}
 					}
 				}
+
+				//echo ("Resize Appended ");
 				
 				$resultOrderCom = mysqli_query($db, $appendConcernMessage);
 				if (! $resultOrderCom) {
@@ -193,13 +247,13 @@
 				}
 				
 
-				$resultOtherCom = mysqli_query($db, $appendOtherMessage);
+				/*$resultOtherCom = mysqli_query($db, $appendOtherMessage);
 				if (! $resultOtherCom) {
 					print("Insertion Could not be performed");
 					$error = mysqli_error($db);
 					print("<p> . $error . </p>");
 					exit;
-				}
+				}*/
 ?>
 
 <!DOCTYPE html>
@@ -225,45 +279,55 @@
 	
 	<h2> Here is what you input on the last form : </h2>
 	
-	<?php 
-	
-				if($ifAllerg) { 
-					print("<p> $allergens of $severity severity, </p> <br>");
-				} else {
-					print("<p> You did not add any allergens, </p> <br>");
-				}
-				
-				if($ifResize) {
-					print("<p> You changed the $dimen dimension to $resize");
-					if ($ifDimSpec) {
-						print(", with the following special instructions : <br> $dimSpec </p> <br>");
+	<div class="comDetails">
+		<?php 
+
+					print("<p> You are contacting tailor at : $tailor </p> <br>");
+
+					if($appendAl) { 
+						print("<p> You added an allergy of $allergens of $severity severity. </p> <br>");
 					} else {
-						print(", </p> <br>");
+						print("<p> You did not add any allergens. </p> <br>");
 					}
-				}
-	?>
-	
-	<p> You left the following message pertaining to your order : </p> 
-	
-	<br>
-	
-	<?php 
-				print("<p> $concerns </p>");
-	?>
-	
-	<br>
-	
-	<p> Other Messages you left : </p>
-	
-	<br>
-	
-	<?php 
-				print("<p> $other </p>");
-		    }
-	}
-	
-	?>
-	
+					
+					if($appendRe) {
+						print("<p> You changed the $dimen dimension to $resize");
+						if ($appendReSp) {
+							print(", with the following special instructions : <br> $dimSpec </p> <br>");
+						} else {
+							print(". </p> <br>");
+						}
+					} else {
+						print("<p> You did not change and of your order dimensions.");
+					}
+		?>
+		
+		<div class="inSec">
+			<p> You left the following message pertaining to your order : </p> 
+			
+			<br>
+			
+			<?php 
+						print("<p> $concerns </p>");
+			?>
+		</div>
+		
+		<br>
+		
+		<div class="inSec">
+			<p> Other Messages you left : (Not implemented)</p>
+			
+			<br>
+			
+			<?php 
+						/*print("<p> $other </p>");*/
+					}
+			}
+		?>
+		</div>
+
+	</div>
+
 	<br>
 	
 	<p> Thank you for reaching out! We suggest you expect a response from most tailors within 3 business days. </p>
