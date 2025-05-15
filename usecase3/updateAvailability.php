@@ -1,6 +1,7 @@
 <?php
 /*
 -------------------------------------------------------
+Author: Nathan Rakhamimov
 updateAvailability.php
 Processes the POST form submission for tailor availability.
 Clears any previous availability records and saves the new ones.
@@ -24,7 +25,7 @@ if (!$db) {
     die("Database connection failed: " . mysqli_connect_error());
 }
 
-// Map weekday name (mon, tue...) to actual date for this week
+// Utility function: May weekday abbreviation to actual date for the current week
 function getDateForDayThisWeek($dayAbbr) {
     $dayMap = [
         'sun' => 0,
@@ -36,31 +37,31 @@ function getDateForDayThisWeek($dayAbbr) {
         'sat' => 6
     ];
 
-    $today = date('w'); // 0 (Sun) to 6 (Sat)
+    $today = date('w'); // Get current day index (0=Sun, 6=Sat)
     $target = $dayMap[$dayAbbr];
 
-    // Go back to Monday
+    // Calculate the timestamp for this week's Monday
     $mondayTimestamp = strtotime("last Sunday") + (60 * 60 * 24); // always get this week's Monday
     $targetTimestamp = $mondayTimestamp + 86400 * ($target - 1); // offset from Monday
 
     return date('Y-m-d', $targetTimestamp);
 }
-
+// Define possible days and time slots
 $days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 $slots = ['9am', '12pm', '3pm'];
 
-// Delete existing availability for this tailor
+// Step 1: Delete all previous availability records for the tailor
 $deleteQuery = "DELETE FROM Tailor_Availability WHERE tailor_id = ?";
 $deleteStmt = $db->prepare($deleteQuery);
 $deleteStmt->bind_param("i", $tailor_id);
 $deleteStmt->execute();
 $deleteStmt->close();
 
-// Prepare insert query
+// Step 2: Prepare the insert statement for new availability
 $insertQuery = "INSERT INTO Tailor_Availability (tailor_id, date, time_slot) VALUES (?, ?, ?)";
 $insertStmt = $db->prepare($insertQuery);
 
-// Loop through form inputs and insert availability
+// Step 3: Loop through the form inputs and save checked time slots
 foreach ($days as $day) {
     $dateValue = getDateForDayThisWeek($day);
 
@@ -72,10 +73,10 @@ foreach ($days as $day) {
         }
     }
 }
-
+// Cleanup
 $insertStmt->close();
 $db->close();
-
-header("Location: tailor-availability.php?status=success");
+// Output success message to client
+echo "success";
 exit();
 ?>
