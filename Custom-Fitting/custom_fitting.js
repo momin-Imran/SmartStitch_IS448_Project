@@ -1,6 +1,5 @@
 "use strict";
 window.addEventListener('load', init);
-window.addEventListener('load', validateForm);
 
 function init(){
   console.log("custom_fitting.js loaded, init() running");
