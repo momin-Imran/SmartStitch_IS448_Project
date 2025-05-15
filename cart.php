@@ -65,6 +65,6 @@ if ($cart) {
     </form>
     <p><a href="index.php">Continue Shopping</a></p>
   <?php endif; ?>
-  <?php include "$BASE_URL/footer.php"; ?>
+  <?php include "footer.html"; ?>
 </body>
 </html>
