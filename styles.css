@@ -194,3 +194,35 @@ img{
 .create-account {
     background-color: black;
 }
+
+/* Styles unique to user communication pages */
+
+input.radioF {
+    margin: 0px;
+    padding: 0px;
+    float: left;
+    width: 5%;
+}
+
+label.RadioLabel {
+    margin: 0px;
+    padding: 0px;
+}
+
+div.comDetails {
+    margin-bottom: 20px;
+    background-color: white;  
+    padding: 15px;
+    border: 1px solid gray;  
+}
+
+div.inSec {
+    margin-bottom: 10px;
+    background-color: white;  
+    padding: 5px;
+    border: 1px solid gray;
+}
+
+p.errText {
+    color : red;
+}
