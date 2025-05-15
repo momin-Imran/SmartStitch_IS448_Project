@@ -18,6 +18,7 @@ document.observe("dom:loaded", function () {
             method: "post",
             parameters: { email: email },
             onSuccess: function (response) {
+                console.log(response.responseText);
                 const result = response.responseText.evalJSON();
 
                 if (result.exists) {

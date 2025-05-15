@@ -1,10 +1,10 @@
-<!-- 
-Author: Adams Ubini
-Description: Checks if a given email exists in the Users table.
-             Returns a JSON response indicating existence or error.
--->
-
 <?php
+
+// Author: Adams Ubini
+// Description: Checks if a given email exists in the Users table.
+//              Returns a JSON response indicating existence or error.
+
+
 include_once('../config.php');
 
 #connect to mysql database
