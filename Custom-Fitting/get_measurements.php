@@ -1,30 +1,57 @@
 <?php
+// get_measurements.php
+// Returns measurement data for a given email via AJAX
+
+// Start session (if you choose to use session-based auth, otherwise optional)
 session_start();
-if (!isset($_SESSION['user_id'])) {
-  // you can omit http_response_code(401) if you don’t care about error codes;
-  // Prototype’s onFailure only fires on HTTP ≠ 2xx, so if you always 200, handle empty data instead.
-  http_response_code(401);
-  echo json_encode(['error'=>'Not logged in']);
-  exit;
+
+// Return JSON
+header('Content-Type: application/json');
+
+// Ensure an email was provided
+if (empty($_POST['email'])) {
+    echo json_encode([]);
+    exit;
 }
-$user_id = (int)$_SESSION['user_id'];
-$db = mysqli_connect('studentdb-maria.gl.umbc.edu','eubini1','eubini1','eubini1');
 
+// Database connection (adjust credentials as needed)
+$db = mysqli_connect(
+    'studentdb-maria.gl.umbc.edu',
+    'eubini1',
+    'eubini1!',
+    'eubini1'
+) or die(json_encode(['error' => 'DB connection failed']));
+
+// Sanitize input
+$email = mysqli_real_escape_string($db, trim($_POST['email']));
+
+// Query measurements by email
 $sql = "
-  SELECT u.email,
-        SizePrefs.chest, SizePrefs.waist, SizePrefs.hips, SizePrefs.rise, SizePrefs.shoulder, SizePrefs.neck, SizePrefs.arm, SizePrefs.inseam
+    SELECT
+        sp.chest,
+        sp.waist,
+        sp.neck,
+        sp.shoulder,
+        sp.arm,
+        sp.inseam,
+        sp.hips,
+        sp.rise,
+        sp.specInst AS specInstr
     FROM Users u
-    LEFT JOIN Customer c   ON c.user_id       = u.user_id
-    LEFT JOIN SizePrefs sp ON sp.customer_id  = c.customer_id
-   WHERE u.user_id = {$user_id}
-   LIMIT 1
-   ";
-
-$result  = mysqli_query($db, $sql);
-
-$data = mysqli_fetch_assoc($result) ?: [];
-
-echo json_encode($data);
+    JOIN Customer c   ON c.user_id       = u.user_id
+    JOIN SizePrefs sp ON sp.customer_id  = c.customer_id
+    WHERE u.email = '$email'
+    LIMIT 1
+";
 
 
-?>
+$result = mysqli_query($db, $sql);
+if (! $result) {
+    echo json_encode(['error' => mysqli_error($db)]);
+    exit;
+}
+
+$data = mysqli_fetch_assoc($result);
+
+// Output the measurements (or empty array if none found)
+echo json_encode($data ?: []);
