@@ -6,7 +6,9 @@ Description: Navigation bar for the Smart Stitch website
 <?php
 
 include_once('config.php');
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 
 
@@ -35,7 +37,7 @@ session_start();
                     <li><a href="<?php echo $BASE_URL; ?>/index.php">Home</a></li>
                     <li><a href="<?php echo $BASE_URL; ?>/Custom-Fitting/Custom-Fitting.php">Custom Fitting</a></li>
                     <li><a href="<?php echo $BASE_URL; ?>/User-Tailor-Communication.php">Contact Tailor</a></li>
-                    <li><a href="<?php echo $BASE_URL; ?>/usecase3/bookingAppointment.php">Book Appointment</a></li>
+                    <li><a href="<?php echo $BASE_URL; ?>/usecase3/bookAppointment.php">Book Appointment</a></li>
                 <?php endif; ?>
                 <li><a href="<?php echo $BASE_URL; ?>/logout.php">Logout</a></li>
             <?php endif; ?>

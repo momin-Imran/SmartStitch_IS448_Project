@@ -69,7 +69,7 @@ if ($result) {
       </div>
     <?php endforeach; ?>
   </div>
-  <?php include "<?php echo $BASE_URL; ?>/footer.html"; ?>
+  <?php include "$BASE_URL/footer.html"; ?>
 
   <!-- AJAX and JS validation to make sure we can search for prods live -->
   <script>
